@@ -1,5 +1,4 @@
 <script setup>
-import {ElScrollbar} from 'element-plus';
 import Appearance from './Appearance.vue';
 import Application from './Application.vue';
 

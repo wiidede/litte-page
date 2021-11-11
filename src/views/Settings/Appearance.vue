@@ -1,6 +1,5 @@
 <script setup>
 import {reactive, computed} from 'vue';
-import {ElRadioButton, ElRadioGroup, ElColorPicker} from 'element-plus';
 import {useStore} from 'vuex';
 
 const store = useStore();
