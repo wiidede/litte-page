@@ -1,5 +1,4 @@
 <script setup>
-import {ElScrollbar} from 'element-plus';
 import GoBackBar from '/@/components/GoBackBar.vue';
 import {computed} from 'vue';
 import {useStore} from 'vuex';
@@ -36,6 +35,8 @@ div {
   height: 100%;
   font-family: baloo_2regular, sans-serif;
   text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .go-back-bar {
