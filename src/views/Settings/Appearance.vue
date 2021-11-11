@@ -18,18 +18,18 @@ const themeActive = computed({
 </script>
 
 <template>
-  <div class="setting-item">
+  <div class="setting-item optional-item">
     <span>Theme</span>
     <el-radio-group
       v-model="themeActive"
       size="mini"
     >
-      <el-radio-button label="Light"/>
-      <el-radio-button label="Dark"/>
-      <el-radio-button label="Follow System"/>
+      <el-radio-button label="Light" />
+      <el-radio-button label="Dark" />
+      <el-radio-button label="Follow System" />
     </el-radio-group>
   </div>
-  <div class="setting-item">
+  <div class="setting-item optional-item">
     <span>Color</span>
     <div class="color-list">
       <el-color-picker
@@ -51,17 +51,12 @@ const themeActive = computed({
 </template>
 
 <style lang="scss" scoped>
-.color-list {
-  display: flex;
-  align-items: center;
-}
-
 .color {
   width: 24px;
   height: 24px;
   border-radius: 100%;
   cursor: pointer;
-  margin: 0 8px;
+  margin: 0 8px 8px 8px;
   transition: width ease .3s, height ease .3s;
 
   &.active {
@@ -71,8 +66,12 @@ const themeActive = computed({
 }
 
 .color-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
   &:deep(.el-color-picker) {
-    margin: 0 8px;
+    margin: 0 8px 8px 8px;
     transition: width ease .3s, height ease .3s;
 
     &.el-color-picker--mini {

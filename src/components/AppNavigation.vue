@@ -15,6 +15,13 @@ const handleCollapse = () => {
 	isCollapse.value = !isCollapse.value;
 };
 
+const mediaQueryListPhone = window.matchMedia('(max-width: 768px)');
+const handleScreenWidthChange = evt => {
+	isCollapse.value = !!evt.matches;
+};
+handleScreenWidthChange(mediaQueryListPhone);
+mediaQueryListPhone.addEventListener('change', handleScreenWidthChange);
+
 // nav status
 const router = useRouter();
 const navs = reactive(menu);
@@ -29,6 +36,16 @@ watchEffect(() => {
 
 <template>
   <nav :class="{collapse: isCollapse, 'nav-hidden': !navigationShow}">
+    <div
+      class="collapse-button"
+      @click="handleCollapse"
+    >
+      <span
+        class="iconfont"
+        :class="isCollapse ? 'icon-arrow-right-s-line' : 'icon-arrow-left-s-line'"
+      />
+      <span v-show="!isCollapse">collapse</span>
+    </div>
     <div
       v-for="(nav, index) in navs"
       :key="`nav${index}`"
@@ -46,16 +63,6 @@ watchEffect(() => {
       class="copyright-info"
     >
       {{ isCollapse ? '' : 'Copyright © 2021 - 2021 Wiidede' }}
-    </div>
-    <div
-      class="collapse-button"
-      @click="handleCollapse"
-    >
-      <span
-        class="iconfont"
-        :class="isCollapse ? 'icon-arrow-right-s-line' : 'icon-arrow-left-s-line'"
-      />
-      <span v-show="!isCollapse">collapse</span>
     </div>
   </nav>
 </template>
@@ -101,7 +108,8 @@ nav {
   }
 
   .collapse-button {
-    margin: 8px 0;
+    margin: 8px 0 32px 0;
+    font-size: 12px;
     display: flex;
     align-items: center;
     cursor: pointer;
