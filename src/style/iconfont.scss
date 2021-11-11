@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 2753587 */
+  src: url('/@/assets/iconfont.woff2') format('woff2'),
+  url('/@/assets/iconfont.woff') format('woff');
+}
+
+.iconfont {
+  font-family: "iconfont", sans-serif !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-forbid-2-line:before {
+  content: "\e867";
+}
+
+.icon-focus-2-fill:before {
+  content: "\e70d";
+}
+
+.icon-record-circle-line:before {
+  content: "\e814";
+}
+
+.icon-layout-full-line:before {
+  content: "\e600";
+}
+
+.icon-layout-left-2-line:before {
+  content: "\e715";
+}
+
+.icon-checkbox-blank-circle-line:before {
+  content: "\e848";
+}
+
+.icon-arrow-drop-right-line:before {
+  content: "\e83e";
+}
+
+.icon-arrow-left-s-line:before {
+  content: "\e842";
+}
+
+.icon-arrow-right-s-line:before {
+  content: "\e844";
+}
+
+.icon-home-fill:before {
+  content: "\e6b7";
+}
+
+.icon-home-line:before {
+  content: "\e6b8";
+}
+
+.icon-book-fill:before {
+  content: "\e75c";
+}
+
+.icon-book-line:before {
+  content: "\e75d";
+}
+
+.icon-settings-fill:before {
+  content: "\e871";
+}
+
+.icon-settings-line:before {
+  content: "\e872";
+}
+

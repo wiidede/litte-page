@@ -1,0 +1,30 @@
+:root {
+  // color
+  --main: #FF9A76;
+  --select: #FF9A7660;
+  --hover: #FF9A7620;
+
+  // theme
+  --background: white;
+  --background-gray: #f8f8f8;
+  --background-button: #ffffff60;
+  --font-color: #303133;
+  --font-color-regular: #606266;
+  --font-color-light: #80808080;
+  --font-color-lighter: #b0b0b080;
+  --color-white: white;
+  --color-black: black;
+}
+
+
+[data-theme="dark"] {
+  --background: #292A2D;
+  --background-gray: #383838;
+  --font-color: #eeeeee;
+  --font-color-regular: #a09e9a;
+  --font-color-light: #80808080;
+  --font-color-lighter: #40404080;
+  --background-button: #00000060;
+  --color-white: black;
+  --color-black: white;
+}
