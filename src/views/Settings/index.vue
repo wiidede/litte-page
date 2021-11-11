@@ -29,7 +29,8 @@ const settings = [
 .view-settings {
   height: 100%;
   box-sizing: border-box;
-
+  max-width: 720px;
+  margin: 0 auto;
   font-size: 18px;
   user-select: none;
   -webkit-user-drag: none;
@@ -60,6 +61,16 @@ const settings = [
     align-items: center;
     justify-content: space-between;
     transition: background-color ease .3s, color ease .3s;
+
+    @media screen and (max-width: 768px) {
+      &.optional-item {
+        padding: 8px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-around;
+        gap: 8px;
+      }
+    }
 
     &:hover {
       background: var(--hover);
