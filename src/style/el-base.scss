@@ -33,3 +33,9 @@
   position: absolute;
   transform: translate3d(-50%, -50%, 0) !important;
 }
+
+.el-select-dropdown {
+  .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+    background-color: var(--hover);
+  }
+}

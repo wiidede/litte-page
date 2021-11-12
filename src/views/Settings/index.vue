@@ -15,7 +15,7 @@ const settings = [
       <div
         v-for="setting in settings"
         :key="setting.name"
-        class="setting-part"
+        class="setting-part card-block"
       >
         <h4>{{ setting.name }}</h4>
         <component :is="setting.component" />
@@ -41,8 +41,6 @@ const settings = [
 }
 
 .setting-part {
-  background: var(--background);
-  transition: background-color ease .3s;
   display: flex;
   flex-direction: column;
   margin: 16px;
