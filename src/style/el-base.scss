@@ -2,6 +2,10 @@
   --el-button-default-background-color: var(--background-button)
 }
 
+.el-color-picker__panel.el-popper {
+  background-color: var(--el-color-white);
+}
+
 .view-settings {
   .el-radio-button--mini {
     margin: 2px;

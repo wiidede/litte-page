@@ -79,13 +79,13 @@ body {
   margin: 0;
   background: var(--background);
   transition: background-color ease .3s;
-}
-
-#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--font-color);
+}
+
+#app {
   transition: color ease .3s;
   width: 100vw;
   height: 100vh;

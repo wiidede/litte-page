@@ -2,16 +2,18 @@
 import {reactive, computed} from 'vue';
 import {useStore} from 'vuex';
 
-const themes = ['Light', 'Dark', 'Follow System'];
-
 const store = useStore();
 
 // color
-const colorActive = computed(() => store.state.settings.color);
 const colorList = reactive(['#FF9A76', '#FF9292', '#42B983', '#7579E7', '#19D3DA', '#056676', '#835858']);
 const setColor = (color) => store.commit('settings/setColor', color);
+const colorActive = computed({
+	get: () => store.state.settings.color,
+	set: setColor,
+});
 
 // theme
+const themeList = ['Light', 'Dark', 'Follow System'];
 const themeActive = computed({
 	get: () => store.state.settings.theme,
 	set: (theme) => store.commit('settings/setTheme', theme),
@@ -26,7 +28,7 @@ const themeActive = computed({
       size="mini"
     >
       <el-radio-button
-        v-for="theme in themes"
+        v-for="theme in themeList"
         :key="`theme-${theme}`"
         :label="theme"
       />
@@ -36,10 +38,9 @@ const themeActive = computed({
     <span>Color</span>
     <div class="color-list">
       <el-color-picker
-        :model-value="colorActive"
+        v-model="colorActive"
         popper-class="setting-color-picker-popper"
         :size="colorList.includes(colorActive) ? 'mini' : 'small'"
-        @active-change="setColor($event)"
       />
       <div
         v-for="(color, index) in colorList"
