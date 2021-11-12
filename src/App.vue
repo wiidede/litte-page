@@ -40,6 +40,14 @@ watchEffect(() => {
 	}
 });
 
+// media query device width
+const mediaQueryListPhone = window.matchMedia('(max-width: 768px)');
+const handleScreenWidthChange = evt => {
+	store.commit('application/setIsPhone', !!evt.matches);
+};
+handleScreenWidthChange(mediaQueryListPhone);
+mediaQueryListPhone.addEventListener('change', handleScreenWidthChange);
+
 // save settings, user preference
 watchEffect(() => {
 	const settings = {
