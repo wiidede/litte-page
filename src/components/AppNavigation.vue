@@ -30,6 +30,9 @@ watchEffect(() => {
 			router.currentRoute.value.path.startsWith(nav.path);
 	});
 });
+
+// year
+const yaer = new Date().getFullYear();
 </script>
 
 <template>
@@ -60,7 +63,7 @@ watchEffect(() => {
     <div
       class="copyright-info"
     >
-      {{ isCollapse ? '' : 'Copyright © 2021 - 2021 Wiidede' }}
+      {{ isCollapse ? '' : `Copyright © 2021 - ${yaer} Wiidede` }}
     </div>
   </nav>
 </template>
