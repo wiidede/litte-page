@@ -12,28 +12,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-forbid-2-line:before {
-  content: "\e867";
-}
-
-.icon-focus-2-fill:before {
-  content: "\e70d";
-}
-
-.icon-record-circle-line:before {
-  content: "\e814";
-}
-
-.icon-layout-full-line:before {
-  content: "\e600";
-}
-
-.icon-layout-left-2-line:before {
+.icon-layout-left-2-fill:before {
   content: "\e715";
 }
 
-.icon-checkbox-blank-circle-line:before {
-  content: "\e848";
+.icon-layout-left-2-line:before {
+  content: "\e716";
+}
+
+.icon-home-fill:before {
+  content: "\e6b7";
+}
+
+.icon-home-line:before {
+  content: "\e6b8";
 }
 
 .icon-arrow-drop-right-line:before {
@@ -48,27 +40,51 @@
   content: "\e844";
 }
 
-.icon-home-fill:before {
-  content: "\e6b7";
-}
-
-.icon-home-line:before {
-  content: "\e6b8";
-}
-
-.icon-book-fill:before {
-  content: "\e75c";
-}
-
-.icon-book-line:before {
-  content: "\e75d";
-}
-
 .icon-settings-fill:before {
   content: "\e871";
 }
 
 .icon-settings-line:before {
   content: "\e872";
+}
+
+.icon-coins-fill:before {
+  content: "\e7ab";
+}
+
+.icon-copper-coin-fill:before {
+  content: "\e7ac";
+}
+
+.icon-copper-coin-line:before {
+  content: "\e7ad";
+}
+
+.icon-coins-line:before {
+  content: "\e7ae";
+}
+
+.icon-exchange-cny-fill:before {
+  content: "\e7af";
+}
+
+.icon-exchange-cny-line:before {
+  content: "\e7b0";
+}
+
+.icon-money-cny-circle-line:before {
+  content: "\e7b3";
+}
+
+.icon-money-cny-circle-fill:before {
+  content: "\e7b4";
+}
+
+.icon-stock-fill:before {
+  content: "\e7b7";
+}
+
+.icon-stock-line:before {
+  content: "\e7b9";
 }
 
