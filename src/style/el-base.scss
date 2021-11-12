@@ -2,7 +2,7 @@
   --el-button-default-background-color: var(--background-button)
 }
 
-.view-settings  {
+.view-settings {
   .el-radio-button--mini .el-radio-button__inner {
     font-size: 14px;
     border-color: var(--font-color-lighter);
@@ -11,4 +11,9 @@
   .el-radio-button:first-child .el-radio-button__inner {
     border-color: var(--font-color-lighter);
   }
+}
+
+.el-color-picker .el-color-picker__icon {
+  position: absolute;
+  transform: translate3d(-50%, -50%, 0) !important;
 }
