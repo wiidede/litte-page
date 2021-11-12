@@ -2,6 +2,8 @@
 import {reactive, computed} from 'vue';
 import {useStore} from 'vuex';
 
+const themes = ['Light', 'Dark', 'Follow System'];
+
 const store = useStore();
 
 // color
@@ -23,9 +25,11 @@ const themeActive = computed({
       v-model="themeActive"
       size="mini"
     >
-      <el-radio-button label="Light" />
-      <el-radio-button label="Dark" />
-      <el-radio-button label="Follow System" />
+      <el-radio-button
+        v-for="theme in themes"
+        :key="`theme-${theme}`"
+        :label="theme"
+      />
     </el-radio-group>
   </div>
   <div class="setting-item optional-item">

@@ -10,17 +10,15 @@ const store = useStore();
 // collapse and show
 let isCollapse = ref(false);
 const navigationShow = computed(() => store.state.application.navigationShow);
+const isPhone = computed(() => store.state.application.isPhone);
 
 const handleCollapse = () => {
 	isCollapse.value = !isCollapse.value;
 };
 
-const mediaQueryListPhone = window.matchMedia('(max-width: 768px)');
-const handleScreenWidthChange = evt => {
-	isCollapse.value = !!evt.matches;
-};
-handleScreenWidthChange(mediaQueryListPhone);
-mediaQueryListPhone.addEventListener('change', handleScreenWidthChange);
+watchEffect(() => {
+	isCollapse.value = isPhone.value;
+});
 
 // nav status
 const router = useRouter();

@@ -1,5 +1,6 @@
 // initial state
 const state = () => ({
+	isPhone: false,
 	navigationShow: true,
 });
 
@@ -11,6 +12,9 @@ const actions = {};
 
 // mutations
 const mutations = {
+	setIsPhone(state, isPhone) {
+		state.isPhone = isPhone;
+	},
 	setNavigationShow(state, navigationShow) {
 		state.navigationShow = navigationShow;
 	},
