@@ -37,30 +37,44 @@ const themeActive = computed({
   <div class="setting-item optional-item">
     <span>Color</span>
     <div class="color-list">
-      <el-color-picker
-        v-model="colorActive"
-        popper-class="setting-color-picker-popper"
-        :size="colorList.includes(colorActive) ? 'mini' : 'small'"
-      />
+      <div class="color-container">
+        <el-color-picker
+          v-model="colorActive"
+          popper-class="setting-color-picker-popper"
+          :size="colorList.includes(colorActive) ? 'mini' : 'small'"
+        />
+      </div>
       <div
         v-for="(color, index) in colorList"
         :key="`color-${String(index)}`"
-        class="color"
-        :class="{active: color === colorActive}"
-        :style="{background: color}"
-        @click="setColor(color)"
-      />
+        class="color-container"
+      >
+        <div
+
+          class="color"
+          :class="{active: color === colorActive}"
+          :style="{background: color}"
+          @click="setColor(color)"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+.color-container {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .color {
   width: 24px;
   height: 24px;
   border-radius: 100%;
   cursor: pointer;
-  margin: 0 8px 8px 8px;
   transition: width ease .3s, height ease .3s;
 
   &.active {
@@ -75,7 +89,6 @@ const themeActive = computed({
   align-items: center;
 
   &:deep(.el-color-picker) {
-    margin: 0 8px 8px 8px;
     transition: width ease .3s, height ease .3s;
 
     &.el-color-picker--mini {
