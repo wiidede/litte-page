@@ -1,0 +1,1 @@
+import{_ as t}from"./index.c190e3cc.js";import{o as a,f as s,g as _,t as o}from"./vendor.b87794c8.js";const c={setup(r){const e="wiidede website";return(n,d)=>(a(),s("div",null,[_("h1",null,o(e))]))}};var l=t(c,[["__scopeId","data-v-0ba263a9"]]);export{l as default};
