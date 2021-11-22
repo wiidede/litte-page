@@ -4,11 +4,11 @@ import {userInvestKey} from '/@/utils/constants';
 
 const totalNum = ref(10000);
 const industriesLocal = JSON.parse(localStorage.getItem(userInvestKey));
-const industries = reactive(Array.isArray(industriesLocal) ? industriesLocal: [{key: '证券'}, {key: '中证500'}, {key: '新能源'}, {key: '半导体'}]);
+const industries = reactive(Array.isArray(industriesLocal) ? industriesLocal : [{key: '证券'}, {key: '中证500'}, {key: '新能源'}, {key: '半导体'}]);
 const industryList = reactive(['中证500', '沪深300', '证券', '军工', '新能源', '半导体', '医疗', '白酒', '有色金属']);
 
 watchEffect(() => {
-	localStorage.setItem(userInvestKey, JSON.stringify(industries));
+  localStorage.setItem(userInvestKey, JSON.stringify(industries));
 });
 </script>
 
@@ -63,6 +63,11 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
+.view-invest-distribution {
+  height: 100%;
+  box-sizing: border-box;
+}
+
 .total-block {
   margin: 16px;
   padding: 16px 8px;
@@ -75,11 +80,6 @@ watchEffect(() => {
 
 .industry-block {
   padding: 8px;
-}
-
-.view-invest-distribution {
-  height: 100%;
-  box-sizing: border-box;
 }
 
 .industry-container {
