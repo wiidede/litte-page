@@ -1,104 +1,106 @@
 <script setup>
+import {reactive, ref, watchEffect} from 'vue';
+
 const props = defineProps({
-  timePoints: {
-    type: Array,
-    default: () => [],
+  min: {
+    type: Number,
+    default: 0,
+  },
+  max: {
+    type: Number,
+    default: 0,
   },
   format: {
     type: Function,
-    default: () => {},
+    default: (time) => String(time),
   },
 });
 
 const emit = defineEmits(['complete']);
 
-// add period
-import {onBeforeUpdate, reactive, ref, watch} from 'vue';
+const visible = ref(false);
+const marks = ref({});
 
-const form = reactive([]);
-const formRef = ref([]);
-onBeforeUpdate(() => {
-  formRef.value = [];
+const form = reactive({
+  name: '',
+  timeRange: [],
 });
-const periodAddingRules = {
+const formRef = ref(null);
+const rules = {
   name: [{required: true, message: 'Please input Name', trigger: 'blur'}],
 };
 
-const initform = () => {
-  form.length = props.timePoints.length;
-  for (let formIndex = 0; formIndex < form.length; formIndex++) {
-    if (!form[formIndex]) {
-      form[formIndex] = {
-        name: '',
-        timeRange: [],
-        visible: false,
-        marks: {},
-      };
-    }
-  }
-};
-
-initform();
-
-const openPeriodAddingModal = (index, min, max) => {
-  form[index].visible = true;
-  form[index].timeRange = [min, max];
-  form[index].marks = {
-    [min]: props.format(min),
-    [max]: props.format(max),
+watchEffect(() => {
+  form.timeRange = [props.min, props.max];
+  marks.value = {
+    [props.min]: props.format(props.min),
+    [props.max]: props.format(props.max),
   };
+});
+
+const openDialog = () => {
+  visible.value = true;
 };
 
-watch([props.timePoints], initform);
+const dialogClosed = () => {
+  form.name = '';
+  form.timeRange = [0, 0];
+};
 
-const addPeriod = (index) => {
-  console.log(formRef.value);
-  formRef.value[index].validate((valid) => {
+const complete = () => {
+  formRef.value.validate((valid) => {
     if (valid) {
-      emit('complete', index);
+      emit('complete', form);
+      visible.value = false;
+      dialogClosed();
     } else {
       return false;
     }
   });
 };
+
+defineExpose({
+  openDialog,
+});
 </script>
 
 <template>
   <el-dialog
-    v-model="form[index].visible"
+    v-model="visible"
     title="Add My Day Item"
+    @closed="dialogClosed"
   >
     <el-form
-      :ref="el => { if (el) formRef[index] = el }"
+      ref="formRef"
       label-position="right"
       label-width="100px"
-      :model="form[index]"
-      :rules="periodAddingRules"
+      :model="form"
+      :rules="rules"
     >
       <el-form-item
         label="Name"
         prop="name"
       >
-        <el-input v-model="form[index].name" />
+        <el-input v-model="form.name" />
       </el-form-item>
       <el-form-item label="Time Range">
         {{
-          getFormatTime(form[index].timeRange[0])
+          props.format(form.timeRange[0])
         }}-{{
-          getFormatTime(form[index].timeRange[1])
+          props.format(form.timeRange[1])
         }}
         <el-slider
-          v-model="form[index].timeRange"
+          v-model="form.timeRange"
           range
           :step="10"
-          :min="timePoints[index - 1]"
-          :max="period"
-          :format-tooltip="getFormatTime"
-          :marks="form[index].marks"
+          :min="min"
+          :max="max"
+          :format-tooltip="props.format"
+          :marks="form.marks"
         />
       </el-form-item>
       <el-form-item>
-        <el-button @click="addPeriod(index)">
+        <el-button @click="complete">
           Add
         </el-button>
       </el-form-item>
@@ -107,7 +109,4 @@ const addPeriod = (index) => {
 </template>
 
 <style scoped>
-div {
-  text-align: center;
-}
 </style>

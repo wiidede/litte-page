@@ -1,9 +1,10 @@
 <script setup>
-import {ref, reactive, onActivated, onDeactivated, onBeforeUpdate, watchEffect, watch} from 'vue';
+import {ref, reactive, onActivated, onDeactivated, watchEffect} from 'vue';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import {Delete, Plus} from '@element-plus/icons';
 import {userMyDayKey} from '/@/utils/constants';
+import AddPeriodDialog from './AddPeriod.vue';
 
 dayjs.extend(duration);
 
@@ -48,44 +49,16 @@ const getFormatTime = (time) => {
 };
 
 // add period
-const periodAddingForm = reactive([]);
-const periodAddingFormRef = ref([]);
-onBeforeUpdate(() => {
-  periodAddingFormRef.value = [];
-});
-const periodAddingRules = {
-  name: [{required: true, message: 'Please input Name', trigger: 'blur'}],
-};
-
-const initPeriodAddingForm = () => {
-  periodAddingForm.length = timePoints.length;
-  for (let formIndex = 0; formIndex < periodAddingForm.length; formIndex++) {
-    if (!periodAddingForm[formIndex]) {
-      periodAddingForm[formIndex] = {
-        name: '',
-        timeRange: [],
-        visible: false,
-        marks: {},
-      };
-    }
-  }
-};
-
-initPeriodAddingForm();
+const addPeriodDialogRef = ref(null);
+const addPeriodDialogProps = reactive({index: 0, min: 0, max: 0});
 
 const openPeriodAddingModal = (index, min, max) => {
-  periodAddingForm[index].visible = true;
-  periodAddingForm[index].timeRange = [min, max];
-  periodAddingForm[index].marks = {
-    [min]: getFormatTime(min),
-    [max]: getFormatTime(max),
-  };
+  Object.assign(addPeriodDialogProps, {index, min, max});
+  addPeriodDialogRef.value.openDialog();
 };
 
-watch([timePoints], initPeriodAddingForm);
-
-const addPeriod = (index) => {
-  const {name, timeRange} = periodAddingForm[index];
+const addPeriod = (index, form) => {
+  const {name, timeRange} = form;
   const [start, end] = timeRange;
   const min = timePoints[index - 1];
   const max = timePoints[index];
@@ -101,12 +74,6 @@ const addPeriod = (index) => {
   } else {
     eventsName[index] = name;
   }
-  periodAddingForm[index] = {
-    name: '',
-    timeRange: [],
-    visible: false,
-    marks: {},
-  };
 };
 
 const deletePeriod = (index) => {
@@ -149,7 +116,7 @@ const deletePeriod = (index) => {
             </el-icon>
           </div>
           <el-progress
-            v-if="timePoints[index - 1] <= time && time < period"
+            v-if="eventsName[index] && timePoints[index - 1] <= time && time < period"
             :text-inside="true"
             :stroke-width="24"
             :percentage="(time - timePoints[index - 1]) * 100 / (period - timePoints[index - 1])"
@@ -167,6 +134,13 @@ const deletePeriod = (index) => {
           {{ getFormatTime(endTime) }} 睡觉啦
         </div>
       </div>
+      <add-period-dialog
+        ref="addPeriodDialogRef"
+        :min="addPeriodDialogProps.min"
+        :max="addPeriodDialogProps.max"
+        :format="getFormatTime"
+        @complete="addPeriod(addPeriodDialogProps.index, $event)"
+      />
     </el-scrollbar>
   </div>
 </template>
