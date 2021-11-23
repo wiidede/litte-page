@@ -3,8 +3,8 @@ import Appearance from './Appearance.vue';
 import Application from './Application.vue';
 
 const settings = [
-	{name: 'Appearance', component: Appearance},
-	{name: 'Application', component: Application},
+  {name: 'Appearance', component: Appearance},
+  {name: 'Application', component: Application},
 ];
 </script>
 
@@ -71,6 +71,7 @@ const settings = [
 
     &:hover {
       background: var(--hover);
+
       .setting-item-placeholder {
         color: var(--main);
       }

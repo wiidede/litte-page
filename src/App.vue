@@ -14,6 +14,9 @@ const store = useStore();
 const color = computed(() => store.state.settings.color);
 watchEffect(() => {
 	setCSSVariable('--main', color.value);
+	setCSSVariable('--main-light', `${color.value}C0`);
+	setCSSVariable('--main-lighter', `${color.value}A0`);
+	setCSSVariable('--main-extra-light', `${color.value}80`);
 	setCSSVariable('--select', `${color.value}60`);
 	setCSSVariable('--hover', `${color.value}20`);
 });
