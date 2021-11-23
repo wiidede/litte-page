@@ -1,5 +1,5 @@
 <script setup>
-import {ref, reactive, onActivated, onDeactivated, watchEffect} from 'vue';
+import {ref, reactive, onActivated, onDeactivated, watchEffect, computed} from 'vue';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import {Delete, Plus} from '@element-plus/icons';
@@ -7,6 +7,12 @@ import {userMyDayKey} from '/@/utils/constants';
 import AddPeriodDialog from './AddPeriod.vue';
 
 dayjs.extend(duration);
+
+import {useStore} from 'vuex';
+
+const store = useStore();
+
+const isPhone = computed(() => store.state.application.isPhone);
 
 const oneHour = 60;
 
@@ -100,16 +106,22 @@ const deletePeriod = (index) => {
           v-for="(period, index) in timePoints"
           :key="`period${index}`"
           class="period-block"
-          :class="{'period-plus': index > 0 && !eventsName[index]}"
+          :class="{'period-plus': index > 0 && !eventsName[index], 'display-none': index === 0}"
         >
           <div
             v-if="index > 0 && eventsName[index]"
+            class="period-line"
             :class="{now: timePoints[index - 1] <= time && time < period}"
           >
-            {{ getFormatTime(timePoints[index - 1]) }}-{{ getFormatTime(period) }}
-            {{ eventsName[index] }}
+            <div class="time-range">
+              {{ getFormatTime(timePoints[index - 1]) }}
+              <span class="char-line" />
+              {{ getFormatTime(period) }}
+              {{ eventsName[index] }}
+            </div>
             <el-icon
               class="action-button"
+              :class="{'is-phone': isPhone}"
               @click="deletePeriod(index)"
             >
               <delete />
@@ -162,7 +174,8 @@ const deletePeriod = (index) => {
 }
 
 .period-block {
-  margin: 8px 0;
+  //margin: 8px 0;
+  padding: 4px 0;
 
   &.period-plus {
     margin: 0;
@@ -172,9 +185,29 @@ const deletePeriod = (index) => {
   }
 
   &:hover {
+    background: var(--hover);
     .action-button {
       display: inline-block;
     }
+  }
+
+  .period-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .time-range {
+    display: flex;
+    align-items: center;
+  }
+
+  .char-line {
+    display: inline-block;
+    width: 12px;
+    height: 2px;
+    margin: 0 4px;
+    background: var(--font-color);
   }
 }
 
@@ -195,6 +228,11 @@ const deletePeriod = (index) => {
   cursor: pointer;
   display: none;
   margin: 0 4px;
+
+  &.is-phone {
+    display: inline-block;
+    color: var(--font-color-regular);
+  }
 
   &:hover {
     color: var(--main);
