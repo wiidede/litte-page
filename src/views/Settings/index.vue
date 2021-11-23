@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'UserSettings',
+};
+</script>
+
 <script setup>
 import Appearance from './Appearance.vue';
 import Application from './Application.vue';

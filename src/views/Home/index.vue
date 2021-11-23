@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'UserHome',
+};
+</script>
+
 <script setup>
 const context = 'wiidede website';
 </script>

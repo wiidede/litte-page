@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'MyDay',
+};
+</script>
+
 <script setup>
 import {ref, reactive, onActivated, onDeactivated, watchEffect, computed} from 'vue';
 import dayjs from 'dayjs';
@@ -186,6 +192,7 @@ const deletePeriod = (index) => {
 
   &:hover {
     background: var(--hover);
+
     .action-button {
       display: inline-block;
     }

@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'InvestDistribution',
+};
+</script>
+
 <script setup>
 import {ref, reactive, watchEffect} from 'vue';
 import {userInvestKey} from '/@/utils/constants';
