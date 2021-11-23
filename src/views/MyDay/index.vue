@@ -150,12 +150,13 @@ const deletePeriod = (index) => {
   height: 100%;
   box-sizing: border-box;
   max-width: 720px;
-  margin: 16px auto;
+  margin: 0 auto;
   font-size: 18px;
   user-select: none;
   -webkit-user-drag: none;
 
   .card-block {
+    margin: 16px;
     padding: 16px;
   }
 }
@@ -206,14 +207,5 @@ const deletePeriod = (index) => {
 
 :deep(.el-dialog) {
   max-width: 520px;
-}
-
-.el-slider {
-  padding: 0 12px;
-  word-break: initial;
-
-  :deep(.el-slider__marks-text) {
-    margin-top: 6px;
-  }
 }
 </style>

@@ -5,6 +5,10 @@ body {
     outline: none;
   }
 
+  .el-dialog {
+    --el-dialog-width: 80%;
+  }
+
   .el-radio-button {
     --el-button-default-background-color: var(--background-button)
   }

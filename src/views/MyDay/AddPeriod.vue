@@ -1,5 +1,10 @@
 <script setup>
-import {reactive, ref, watchEffect} from 'vue';
+import {computed, reactive, ref, watchEffect} from 'vue';
+import {useStore} from 'vuex';
+
+const store = useStore();
+
+const isPhone = computed(() => store.state.application.isPhone);
 
 const props = defineProps({
   min: {
@@ -21,6 +26,14 @@ const emit = defineEmits(['complete']);
 const visible = ref(false);
 const marks = ref({});
 
+const checkTimeRange = (rule, value, callback) => {
+  if (value[0] === value[1]) {
+    return callback(new Error('Start time and end time cannot be the same'));
+  } else {
+    return callback();
+  }
+};
+
 const form = reactive({
   name: '',
   timeRange: [],
@@ -28,6 +41,7 @@ const form = reactive({
 const formRef = ref(null);
 const rules = {
   name: [{required: true, message: 'Please input Name', trigger: 'blur'}],
+  timeRange: [{ validator: checkTimeRange, trigger: 'blur' }],
 };
 
 watchEffect(() => {
@@ -44,7 +58,7 @@ const openDialog = () => {
 
 const dialogClosed = () => {
   form.name = '';
-  form.timeRange = [0, 0];
+  form.timeRange = [props.min, props.max];
 };
 
 const complete = () => {
@@ -72,7 +86,7 @@ defineExpose({
   >
     <el-form
       ref="formRef"
-      label-position="right"
+      :label-position="isPhone ? 'top' : 'right'"
       label-width="100px"
       :model="form"
       :rules="rules"
@@ -83,7 +97,10 @@ defineExpose({
       >
         <el-input v-model="form.name" />
       </el-form-item>
-      <el-form-item label="Time Range">
+      <el-form-item
+        label="Time Range"
+        prop="timeRange"
+      >
         {{
           props.format(form.timeRange[0])
         }}-{{
@@ -93,10 +110,10 @@ defineExpose({
           v-model="form.timeRange"
           range
           :step="10"
-          :min="min"
-          :max="max"
+          :min="props.min"
+          :max="props.max"
           :format-tooltip="props.format"
-          :marks="form.marks"
+          :marks="marks"
         />
       </el-form-item>
       <el-form-item>
@@ -108,5 +125,16 @@ defineExpose({
   </el-dialog>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+
+.el-slider {
+  word-break: initial;
+  transform: translateY(-12px);
+  margin: 0 10px;
+
+  :deep(.el-slider__marks-text) {
+    margin-top: 6px;
+    font-size: 12px;
+  }
+}
 </style>
