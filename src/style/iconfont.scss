@@ -12,6 +12,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-calendar-event-fill:before {
+  content: "\e6ca";
+}
+
+.icon-calendar-event-line:before {
+  content: "\e6cb";
+}
+
 .icon-layout-left-2-fill:before {
   content: "\e715";
 }
