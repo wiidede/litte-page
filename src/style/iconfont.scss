@@ -12,6 +12,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-checkbox-blank-circle-line:before {
+  content: "\e848";
+}
+
 .icon-calendar-event-fill:before {
   content: "\e6ca";
 }

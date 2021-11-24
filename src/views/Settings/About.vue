@@ -8,7 +8,7 @@ const version = computed(() => store.state.version);
 </script>
 
 <template>
-  <div class="view-about">
+  <div id="view-about">
     <el-scrollbar ref="scrollViewRef">
       <go-back-bar
         ref="goBackBarRef"
@@ -27,11 +27,7 @@ const version = computed(() => store.state.version);
 </template>
 
 <style lang="scss" scoped>
-div {
-  text-align: center;
-}
-
-.view-about {
+#view-about {
   height: 100%;
   font-family: baloo_2regular, sans-serif;
   text-align: center;

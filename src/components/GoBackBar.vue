@@ -13,7 +13,6 @@ import {goBack} from '/@/utils';
 
 <style lang="scss" scoped>
 .comp-go-back {
-
   text-align: initial;
   background: var(--background);
   box-sizing: border-box;

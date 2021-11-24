@@ -9,13 +9,17 @@ const context = 'wiidede website';
 </script>
 
 <template>
-  <div>
-    <h1>{{ context }}</h1>
+  <div id="view-home-page">
+    <el-scrollbar>
+      <h1>{{ context }}</h1>
+    </el-scrollbar>
   </div>
 </template>
 
 <style scoped>
-div {
+#view-home-page {
+  height: 100%;
+  box-sizing: border-box;
   text-align: center;
 }
 </style>

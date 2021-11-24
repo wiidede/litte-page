@@ -15,7 +15,7 @@ const settings = [
 </script>
 
 <template>
-  <div class="view-settings">
+  <div id="view-settings">
     <el-scrollbar>
       <h1>Settings</h1>
       <div
@@ -31,7 +31,7 @@ const settings = [
 </template>
 
 <style lang="scss" scoped>
-.view-settings {
+#view-settings {
   height: 100%;
   box-sizing: border-box;
   max-width: 720px;

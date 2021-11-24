@@ -11,6 +11,7 @@ import duration from 'dayjs/plugin/duration';
 import {Delete, Plus, Edit, Check} from '@element-plus/icons';
 import {userMyDayKey} from '/@/utils/constants';
 import AddPeriodDialog from './AddPeriod.vue';
+import NavTopBar from '/@/components/NavTopBar.vue';
 
 dayjs.extend(duration);
 
@@ -111,7 +112,8 @@ const deletePeriod = (index) => {
     :class="{'is-phone': isPhone}"
   >
     <el-scrollbar>
-      <div class="card-block">
+      <nav-top-bar v-if="isPhone" />
+      <div class="my-day-card card-block">
         <template v-if="isPhone">
           <div
             class="corner"
@@ -205,7 +207,14 @@ const deletePeriod = (index) => {
   user-select: none;
   -webkit-user-drag: none;
 
-  .card-block {
+  .comp-nav-top-bar {
+    margin: 0 16px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+
+  .my-day-card {
     margin: 16px;
     padding: 16px;
     position: relative;
@@ -237,7 +246,8 @@ const deletePeriod = (index) => {
 
   &.is-phone {
     .card-block {
-      margin: 16px 2px;
+      margin-right: 2px;
+      margin-left: 2px;
     }
 
     .period-line {

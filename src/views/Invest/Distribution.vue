@@ -19,7 +19,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="view-invest-distribution">
+  <div id="view-invest-distribution">
     <el-scrollbar>
       <div class="card-block total-block">
         <div class="input-container">
@@ -69,7 +69,7 @@ watchEffect(() => {
 </template>
 
 <style lang="scss" scoped>
-.view-invest-distribution {
+#view-invest-distribution {
   height: 100%;
   box-sizing: border-box;
 }
