@@ -24,9 +24,11 @@ const isEditAll = ref(false);
 
 const oneHour = 60;
 
-let startTime = ref(8 * oneHour); // offset
-let time = ref(0);
-let endTime = ref(16 * oneHour);
+const startTime = ref(8 * oneHour); // offset
+const startLabel = ref('起床啦');
+const time = ref(0);
+const endTime = ref(16 * oneHour);
+const endLabel = ref('睡觉啦');
 
 const myDayConfigLocal = JSON.parse(localStorage.getItem(userMyDayKey));
 
@@ -66,13 +68,41 @@ const getFormatTime = (time) => {
 const addPeriodDialogRef = ref(null);
 const addPeriodDialogIndex = ref(0);
 
-const openPeriodAddingModal = (index, min, max) => {
+const openAddDialog = (index, min, max) => {
   addPeriodDialogIndex.value = index;
   const config = {
-    type: 'add', // add edit start end
+    type: 'add',
     min: min,
     max: max,
     timeRange: [min , max],
+  };
+  addPeriodDialogRef.value.openDialog(config);
+};
+
+const openEditDialog = (index) => {
+  alert('还没开发！Not developed yet! ');
+};
+const openEditStartDialog = () => {
+  const min = 0;
+  const max = 30;
+  const config = {
+    type: 'start',
+    name: startLabel,
+    min,
+    max,
+    time: min,
+  };
+  addPeriodDialogRef.value.openDialog(config);
+};
+const openEditEndDialog = () => {
+  const min = 0;
+  const max = 30;
+  const config = {
+    type: 'end',
+    name, endLabel,
+    min,
+    max,
+    time: min,
   };
   addPeriodDialogRef.value.openDialog(config);
 };
@@ -94,10 +124,6 @@ const addPeriod = (index, form) => {
   } else {
     eventsName[index] = name;
   }
-};
-
-const editPeriod = () => {
-  alert('还没开发！Not developed yet! ');
 };
 
 const deletePeriod = (index) => {
@@ -142,7 +168,17 @@ const deletePeriod = (index) => {
           It's getting late, time for bed!
         </h1>
         <div class="period-block">
-          {{ getFormatTime(0) }} 起床啦
+          <div class="period-line">
+            <div>{{ getFormatTime(0) }} {{ startLabel }}</div>
+            <div
+              class="action-button"
+              :class="{'show-action-button': isPhone && isEditAll, 'is-pc': !isPhone}"
+            >
+              <el-icon @click="openEditStartDialog">
+                <edit />
+              </el-icon>
+            </div>
+          </div>
         </div>
         <div
           v-for="(period, index) in timePoints"
@@ -167,7 +203,7 @@ const deletePeriod = (index) => {
               class="action-button"
               :class="{'show-action-button': isPhone && isEditAll, 'is-pc': !isPhone}"
             >
-              <el-icon @click="openPeriodAddingModal(index, timePoints[index - 1], period)">
+              <el-icon @click="openEditDialog(index)">
                 <edit />
               </el-icon>
               <el-icon @click="deletePeriod(index)">
@@ -185,13 +221,23 @@ const deletePeriod = (index) => {
           <el-icon
             v-if="index > 0 && !eventsName[index]"
             class="add-button"
-            @click="openPeriodAddingModal(index, timePoints[index - 1], period)"
+            @click="openAddDialog(index, timePoints[index - 1], period)"
           >
             <plus />
           </el-icon>
         </div>
         <div class="period-block">
-          {{ getFormatTime(endTime) }} 睡觉啦
+          <div class="period-line">
+            <div>{{ getFormatTime(endTime) }} {{ endLabel }}</div>
+            <div
+              class="action-button"
+              :class="{'show-action-button': isPhone && isEditAll, 'is-pc': !isPhone}"
+            >
+              <el-icon @click="openEditEndDialog">
+                <edit />
+              </el-icon>
+            </div>
+          </div>
         </div>
       </div>
       <add-period-dialog
