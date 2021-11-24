@@ -24,6 +24,7 @@ const config = ref({
   time: 0,
   timeRange: [0 , 10],
 });
+const isTime = computed(() => config.value.hasOwnProperty('time'));
 const marks = ref({});
 
 const checkTimeRange = (rule, value, callback) => {
@@ -62,6 +63,7 @@ const dialogClosed = () => {
   form.name = '';
   form.time = config.value.min;
   form.timeRange = [config.value.min, config.value.max];
+  formRef.value.clearValidate();
 };
 
 const complete = () => {
@@ -95,13 +97,34 @@ defineExpose({
       :rules="rules"
     >
       <el-form-item
-        label="Name"
+        label="Name:"
         prop="name"
       >
-        <el-input v-model="form.name" />
+        <el-input
+          v-model="form.name"
+          @keyup.enter="complete"
+        />
       </el-form-item>
       <el-form-item
-        label="Time Range"
+        v-if="isTime"
+        label="Time:"
+        prop="time"
+      >
+        {{
+          props.format(form.time)
+        }}
+        <el-slider
+          v-model="form.time"
+          :step="10"
+          :min="config.min"
+          :max="config.max"
+          :format-tooltip="props.format"
+          :marks="marks"
+        />
+      </el-form-item>
+      <el-form-item
+        v-else
+        label="Time Range:"
         prop="timeRange"
       >
         {{

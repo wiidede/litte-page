@@ -64,6 +64,19 @@ const getFormatTime = (time) => {
   return dayjs.duration(time + startTime.value, 'minutes').format('HH:mm');
 };
 
+/**
+ * get time between 0 - 24h
+ * @param time
+ */
+const formatTimeValue = (time) => {
+  if (time < 0) {
+    time = 24 * oneHour - (time % (24 * oneHour));
+  } else {
+    time = time % (24 * oneHour);
+  }
+  return time;
+};
+
 // add period
 const addPeriodDialogRef = ref(null);
 const addPeriodDialogIndex = ref(0);
@@ -82,27 +95,31 @@ const openAddDialog = (index, min, max) => {
 const openEditDialog = (index) => {
   alert('还没开发！Not developed yet! ');
 };
+
 const openEditStartDialog = () => {
-  const min = 0;
-  const max = 30;
+  const min = timePoints[timePoints.length - 1];
+  const max = (eventsName[1] === null ? timePoints[1] : timePoints[0]) + 24 * oneHour;
+
   const config = {
     type: 'start',
-    name: startLabel,
+    name: startLabel.value,
     min,
     max,
-    time: min,
+    time: 0,
   };
   addPeriodDialogRef.value.openDialog(config);
 };
 const openEditEndDialog = () => {
-  const min = 0;
-  const max = 30;
+  const min = eventsName[timePoints.length - 1] === null ?
+    timePoints[timePoints.length - 2] :
+    timePoints[timePoints.length - 1];
+  const max = 24 * oneHour;
   const config = {
     type: 'end',
-    name, endLabel,
+    name: endLabel.value,
     min,
     max,
-    time: min,
+    time: endTime.value,
   };
   addPeriodDialogRef.value.openDialog(config);
 };
@@ -126,9 +143,49 @@ const addPeriod = (index, form) => {
   }
 };
 
+const editPeriod = (index, form) => {
+
+};
+
+const editStart = (form) => {
+  startLabel.value = form.name;
+  startTime.value = formatTimeValue(form.time + startTime.value);
+};
+
+const editEnd = (form) => {
+  endLabel.value = form.name;
+  endTime.value = form.time || 24 * oneHour;
+  if (eventsName[timePoints.length - 1] === null) {
+    if (timePoints[timePoints.length - 2] === endTime.value) {
+        timePoints.pop();
+        eventsName.pop();
+    } else {
+      timePoints[timePoints.length - 1] = endTime.value;
+    }
+  } else {
+    if (endTime.value > timePoints[timePoints.length - 1]) {
+      timePoints.push(endTime.value);
+      eventsName.push(null);
+    }
+  }
+
+  // if (endTime.value > timePoints[timePoints.length - 1]) {
+  //   if (eventsName[timePoints.length - 1] !== null) {
+  //     timePoints.push(endTime.value);
+  //     eventsName.push(null);
+  //   } else {
+  //
+  //   }
+  //
+  // } else if (endTime.value === timePoints[timePoints.length - 1] && eventsName[timePoints.length - 1] === null){
+  //   timePoints.pop();
+  //   eventsName.pop();
+  // }
+};
+
 const deletePeriod = (index) => {
   eventsName[index] = null;
-  for (let i = 1; i < timePoints.length; ++i) {
+  for (let i = 2; i < timePoints.length; ++i) {
     if (eventsName[i - 1] === null && eventsName[i] === null) {
       timePoints.splice(i - 1, 1);
       eventsName.splice(i - 1, 1);
@@ -145,9 +202,11 @@ const deletePeriod = (index) => {
   >
     <el-scrollbar>
       <nav-top-bar v-if="isPhone" />
+      <p>{{ startTime }}</p>
       <p>{{ timePoints }}</p>
       <p>{{ eventsName }}</p>
       <div class="my-day-card card-block">
+        <!-- top block -->
         <template v-if="isPhone">
           <div
             class="corner"
@@ -164,9 +223,10 @@ const deletePeriod = (index) => {
           </div>
         </template>
         <h1>{{ getFormatTime(time) }}</h1>
-        <h1 v-if="time > timePoints[timePoints.length] - 1">
+        <h1 v-if="time + startTime > timePoints[timePoints.length - 1]">
           It's getting late, time for bed!
         </h1>
+        <!-- my day period block start -->
         <div class="period-block">
           <div class="period-line">
             <div>{{ getFormatTime(0) }} {{ startLabel }}</div>
@@ -180,6 +240,7 @@ const deletePeriod = (index) => {
             </div>
           </div>
         </div>
+        <!-- my day period block -->
         <div
           v-for="(period, index) in timePoints"
           :key="`period${index}`"
@@ -226,6 +287,7 @@ const deletePeriod = (index) => {
             <plus />
           </el-icon>
         </div>
+        <!-- my day period block end -->
         <div class="period-block">
           <div class="period-line">
             <div>{{ getFormatTime(endTime) }} {{ endLabel }}</div>
@@ -244,6 +306,9 @@ const deletePeriod = (index) => {
         ref="addPeriodDialogRef"
         :format="getFormatTime"
         @add="addPeriod(addPeriodDialogIndex, $event)"
+        @edit="editPeriod(addPeriodDialogIndex, $event)"
+        @start="editStart"
+        @end="editEnd"
       />
     </el-scrollbar>
   </div>
