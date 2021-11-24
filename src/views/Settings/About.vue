@@ -14,7 +14,7 @@ const version = computed(() => store.state.version);
         ref="goBackBarRef"
         class="go-back-bar"
       />
-      <div class="about-item">
+      <div class="about-item card-block">
         <div>
           Author: wiidede
         </div>

@@ -3,7 +3,7 @@ import {goBack} from '/@/utils';
 </script>
 
 <template>
-  <div class="comp-go-back">
+  <div class="comp-go-back card-block">
     <div @click="goBack">
       <span class="iconfont icon-arrow-left-s-line" />
       <span>Back</span>
