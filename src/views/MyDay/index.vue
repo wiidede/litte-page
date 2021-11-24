@@ -113,7 +113,10 @@ const deletePeriod = (index) => {
     <el-scrollbar>
       <div class="card-block">
         <template v-if="isPhone">
-          <div class="corner"></div>
+          <div
+            class="corner"
+            @click="isEditAll = !isEditAll"
+          />
           <div
             class="edit-all"
             @click="isEditAll = !isEditAll"
@@ -154,7 +157,7 @@ const deletePeriod = (index) => {
               class="action-button"
               :class="{'show-action-button': isPhone && isEditAll}"
             >
-              <el-icon @click="editPeriod(index)">
+              <el-icon @click="editPeriod()">
                 <edit />
               </el-icon>
               <el-icon @click="deletePeriod(index)">
@@ -206,6 +209,7 @@ const deletePeriod = (index) => {
     margin: 16px;
     padding: 16px;
     position: relative;
+    overflow: hidden;
 
     .corner {
       position: absolute;
@@ -216,6 +220,7 @@ const deletePeriod = (index) => {
       border: 30px solid transparent;
       border-right-color: var(--background-gray);
       transform: rotateZ(135deg);
+      cursor: pointer;
     }
 
     .edit-all {
@@ -223,6 +228,10 @@ const deletePeriod = (index) => {
       right: 4px;
       top: 4px;
       cursor: pointer;
+
+      .el-icon {
+        --font-size: 16px;
+      }
     }
   }
 
@@ -236,7 +245,6 @@ const deletePeriod = (index) => {
     }
   }
 }
-
 
 
 .period-block {
@@ -298,6 +306,7 @@ const deletePeriod = (index) => {
 
   .el-icon {
     margin: 0 4px;
+
     &:hover {
       color: var(--main);
     }
