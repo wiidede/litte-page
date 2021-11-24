@@ -8,7 +8,7 @@ export default {
 import {ref, reactive, onActivated, onDeactivated, watchEffect, computed} from 'vue';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import {Delete, Plus} from '@element-plus/icons';
+import {Delete, Plus, Edit, Check} from '@element-plus/icons';
 import {userMyDayKey} from '/@/utils/constants';
 import AddPeriodDialog from './AddPeriod.vue';
 
@@ -19,6 +19,7 @@ import {useStore} from 'vuex';
 const store = useStore();
 
 const isPhone = computed(() => store.state.application.isPhone);
+const isEditAll = ref(false);
 
 const oneHour = 60;
 
@@ -101,10 +102,25 @@ const deletePeriod = (index) => {
 </script>
 
 <template>
-  <div class="view-my-day">
+  <div
+    id="view-my-day"
+    :class="{'is-phone': isPhone}"
+  >
     <el-scrollbar>
       <div class="card-block">
+        <div
+          class="edit-all"
+          @click="isEditAll = !isEditAll"
+        >
+          <el-icon>
+            <check v-if="isEditAll" />
+            <edit v-else />
+          </el-icon>
+        </div>
         <h1>{{ getFormatTime(time) }}</h1>
+        <h1 v-if="time > timePoints[timePoints.length] - 1">
+          It's getting late, time for bed!
+        </h1>
         <div class="period-block">
           {{ getFormatTime(0) }} 起床啦
         </div>
@@ -120,18 +136,24 @@ const deletePeriod = (index) => {
             :class="{now: timePoints[index - 1] <= time && time < period}"
           >
             <div class="time-range">
-              {{ getFormatTime(timePoints[index - 1]) }}
-              <span class="char-line" />
-              {{ getFormatTime(period) }}
-              {{ eventsName[index] }}
+              <span class="time-range-value">
+                {{ getFormatTime(timePoints[index - 1]) }} - {{ getFormatTime(period) }}
+              </span>
+              <span class="time-range-label">
+                {{ eventsName[index] }}
+              </span>
             </div>
-            <el-icon
+            <div
               class="action-button"
-              :class="{'is-phone': isPhone}"
-              @click="deletePeriod(index)"
+              :class="{'show-action-button': isPhone && isEditAll}"
             >
-              <delete />
-            </el-icon>
+              <el-icon>
+                <edit />
+              </el-icon>
+              <el-icon @click="deletePeriod(index)">
+                <delete />
+              </el-icon>
+            </div>
           </div>
           <el-progress
             v-if="eventsName[index] && timePoints[index - 1] <= time && time < period"
@@ -164,7 +186,7 @@ const deletePeriod = (index) => {
 </template>
 
 <style lang="scss" scoped>
-.view-my-day {
+#view-my-day {
   height: 100%;
   box-sizing: border-box;
   max-width: 720px;
@@ -176,8 +198,28 @@ const deletePeriod = (index) => {
   .card-block {
     margin: 16px;
     padding: 16px;
+    position: relative;
+
+    .edit-all {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+  }
+
+  &.is-phone {
+    .card-block {
+      margin: 16px 2px;
+    }
+
+    .period-line {
+      justify-content: initial;
+    }
   }
 }
+
+
 
 .period-block {
   //margin: 8px 0;
@@ -194,7 +236,7 @@ const deletePeriod = (index) => {
     background: var(--hover);
 
     .action-button {
-      display: inline-block;
+      display: inline-flex;
     }
   }
 
@@ -209,12 +251,13 @@ const deletePeriod = (index) => {
     align-items: center;
   }
 
-  .char-line {
-    display: inline-block;
-    width: 12px;
-    height: 2px;
-    margin: 0 4px;
-    background: var(--font-color);
+  .time-range-value {
+    flex-shrink: 0;
+    margin-right: 8px;
+  }
+
+  .time-range-label {
+    word-wrap: anywhere;
   }
 }
 
@@ -230,19 +273,21 @@ const deletePeriod = (index) => {
   }
 }
 
-.el-icon.action-button {
+.action-button {
   --font-size: .8em;
   cursor: pointer;
   display: none;
-  margin: 0 4px;
 
-  &.is-phone {
-    display: inline-block;
-    color: var(--font-color-regular);
+  .el-icon {
+    margin: 0 4px;
+    &:hover {
+      color: var(--main);
+    }
   }
 
-  &:hover {
-    color: var(--main);
+  &.show-action-button {
+    display: inline-flex;
+    color: var(--font-color-regular);
   }
 }
 
