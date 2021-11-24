@@ -89,6 +89,10 @@ const addPeriod = (index, form) => {
   }
 };
 
+const editPeriod = () => {
+  alert('还没开发！Not developed yet! ');
+};
+
 const deletePeriod = (index) => {
   eventsName[index] = null;
   for (let i = 1; i < timePoints.length; ++i) {
@@ -108,15 +112,18 @@ const deletePeriod = (index) => {
   >
     <el-scrollbar>
       <div class="card-block">
-        <div
-          class="edit-all"
-          @click="isEditAll = !isEditAll"
-        >
-          <el-icon>
-            <check v-if="isEditAll" />
-            <edit v-else />
-          </el-icon>
-        </div>
+        <template v-if="isPhone">
+          <div class="corner"></div>
+          <div
+            class="edit-all"
+            @click="isEditAll = !isEditAll"
+          >
+            <el-icon>
+              <check v-if="isEditAll" />
+              <edit v-else />
+            </el-icon>
+          </div>
+        </template>
         <h1>{{ getFormatTime(time) }}</h1>
         <h1 v-if="time > timePoints[timePoints.length] - 1">
           It's getting late, time for bed!
@@ -147,7 +154,7 @@ const deletePeriod = (index) => {
               class="action-button"
               :class="{'show-action-button': isPhone && isEditAll}"
             >
-              <el-icon>
+              <el-icon @click="editPeriod(index)">
                 <edit />
               </el-icon>
               <el-icon @click="deletePeriod(index)">
@@ -200,10 +207,21 @@ const deletePeriod = (index) => {
     padding: 16px;
     position: relative;
 
+    .corner {
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 0;
+      height: 0;
+      border: 30px solid transparent;
+      border-right-color: var(--background-gray);
+      transform: rotateZ(135deg);
+    }
+
     .edit-all {
       position: absolute;
-      right: 0;
-      top: 0;
+      right: 4px;
+      top: 4px;
       cursor: pointer;
     }
   }
