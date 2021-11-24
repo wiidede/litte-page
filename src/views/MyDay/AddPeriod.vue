@@ -7,23 +7,23 @@ const store = useStore();
 const isPhone = computed(() => store.state.application.isPhone);
 
 const props = defineProps({
-  min: {
-    type: Number,
-    default: 0,
-  },
-  max: {
-    type: Number,
-    default: 0,
-  },
   format: {
     type: Function,
     default: (time) => String(time),
   },
 });
 
-const emit = defineEmits(['complete']);
+const emit = defineEmits(['add', 'edit', 'start', 'end']);
 
 const visible = ref(false);
+const config = ref({
+  type: 'add', // add edit start end
+  name: '',
+  min: 0,
+  max: 10,
+  time: 0,
+  timeRange: [0 , 10],
+});
 const marks = ref({});
 
 const checkTimeRange = (rule, value, callback) => {
@@ -36,6 +36,7 @@ const checkTimeRange = (rule, value, callback) => {
 
 const form = reactive({
   name: '',
+  time: 0,
   timeRange: [],
 });
 const formRef = ref(null);
@@ -45,26 +46,28 @@ const rules = {
 };
 
 watchEffect(() => {
-  form.timeRange = [props.min, props.max];
   marks.value = {
-    [props.min]: props.format(props.min),
-    [props.max]: props.format(props.max),
+    [config.value.min]: props.format(config.value.min),
+    [config.value.max]: props.format(config.value.max),
   };
 });
 
-const openDialog = () => {
+const openDialog = (conf) => {
+  config.value = conf;
+  Object.assign(form, conf);
   visible.value = true;
 };
 
 const dialogClosed = () => {
   form.name = '';
-  form.timeRange = [props.min, props.max];
+  form.time = config.value.min;
+  form.timeRange = [config.value.min, config.value.max];
 };
 
 const complete = () => {
   formRef.value.validate((valid) => {
     if (valid) {
-      emit('complete', form);
+      emit(config.value.type, form);
       visible.value = false;
       dialogClosed();
     } else {
@@ -110,8 +113,8 @@ defineExpose({
           v-model="form.timeRange"
           range
           :step="10"
-          :min="props.min"
-          :max="props.max"
+          :min="config.min"
+          :max="config.max"
           :format-tooltip="props.format"
           :marks="marks"
         />

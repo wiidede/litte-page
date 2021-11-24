@@ -64,11 +64,17 @@ const getFormatTime = (time) => {
 
 // add period
 const addPeriodDialogRef = ref(null);
-const addPeriodDialogProps = reactive({index: 0, min: 0, max: 0});
+const addPeriodDialogIndex = ref(0);
 
 const openPeriodAddingModal = (index, min, max) => {
-  Object.assign(addPeriodDialogProps, {index, min, max});
-  addPeriodDialogRef.value.openDialog();
+  addPeriodDialogIndex.value = index;
+  const config = {
+    type: 'add', // add edit start end
+    min: min,
+    max: max,
+    timeRange: [min , max],
+  };
+  addPeriodDialogRef.value.openDialog(config);
 };
 
 const addPeriod = (index, form) => {
@@ -113,6 +119,8 @@ const deletePeriod = (index) => {
   >
     <el-scrollbar>
       <nav-top-bar v-if="isPhone" />
+      <p>{{ timePoints }}</p>
+      <p>{{ eventsName }}</p>
       <div class="my-day-card card-block">
         <template v-if="isPhone">
           <div
@@ -159,7 +167,7 @@ const deletePeriod = (index) => {
               class="action-button"
               :class="{'show-action-button': isPhone && isEditAll, 'is-pc': !isPhone}"
             >
-              <el-icon @click="editPeriod()">
+              <el-icon @click="openPeriodAddingModal(index, timePoints[index - 1], period)">
                 <edit />
               </el-icon>
               <el-icon @click="deletePeriod(index)">
@@ -188,10 +196,8 @@ const deletePeriod = (index) => {
       </div>
       <add-period-dialog
         ref="addPeriodDialogRef"
-        :min="addPeriodDialogProps.min"
-        :max="addPeriodDialogProps.max"
         :format="getFormatTime"
-        @complete="addPeriod(addPeriodDialogProps.index, $event)"
+        @add="addPeriod(addPeriodDialogIndex, $event)"
       />
     </el-scrollbar>
   </div>
