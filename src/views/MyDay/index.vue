@@ -157,7 +157,7 @@ const deletePeriod = (index) => {
             </div>
             <div
               class="action-button"
-              :class="{'show-action-button': isPhone && isEditAll}"
+              :class="{'show-action-button': isPhone && isEditAll, 'is-pc': !isPhone}"
             >
               <el-icon @click="editPeriod()">
                 <edit />
@@ -258,7 +258,6 @@ const deletePeriod = (index) => {
 
 
 .period-block {
-  //margin: 8px 0;
   padding: 4px 0;
 
   &.period-plus {
@@ -271,7 +270,7 @@ const deletePeriod = (index) => {
   &:hover {
     background: var(--hover);
 
-    .action-button {
+    .action-button.is-pc  {
       display: inline-flex;
     }
   }
@@ -316,6 +315,7 @@ const deletePeriod = (index) => {
 
   .el-icon {
     margin: 0 4px;
+    transition: color ease .3s;
 
     &:hover {
       color: var(--main);
