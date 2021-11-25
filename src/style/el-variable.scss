@@ -30,11 +30,11 @@ body {
   --el-text-color-regular: var(--font-color-regular);
   --el-text-color-secondary: var(--font-color-light);
   --el-text-color-placeholder: var(--font-color-lighter);;
-  --el-border-color-base: var(--font-color-regular);
-  --el-border-color-light: var(--font-color-light);
+  --el-border-color-base: var(--font-color-light);
+  --el-border-color-light: var(--font-color-lighter);
   --el-border-color-lighter: var(--font-color-lighter);
   --el-border-color-extra-light: var(--font-color-extra-light);
-  --el-background-color-base: var(--background-gray);
+  --el-background-color-base: var(--background);
   --el-border-width-base: 1px;
   --el-border-style-base: solid;
   --el-border-color-hover: var(--el-text-color-placeholder);

@@ -27,6 +27,13 @@ const config = ref({
 const isTime = computed(() => config.value.hasOwnProperty('time'));
 const marks = ref({});
 
+const TitleMap =  {
+  add: 'Add a Period',
+  edit: 'Edit the Period',
+  start: 'Edit Start Time',
+  end: 'Edit End Time',
+};
+
 const checkTimeRange = (rule, value, callback) => {
   if (value[0] === value[1]) {
     return callback(new Error('Start time and end time cannot be the same'));
@@ -86,7 +93,7 @@ defineExpose({
 <template>
   <el-dialog
     v-model="visible"
-    title="Add My Day Item"
+    :title="TitleMap[config.type]"
     @closed="dialogClosed"
   >
     <el-form
@@ -144,7 +151,7 @@ defineExpose({
       </el-form-item>
       <el-form-item>
         <el-button @click="complete">
-          Add
+          {{ config.type === 'add' ? 'Add' : 'Confirm' }}
         </el-button>
       </el-form-item>
     </el-form>

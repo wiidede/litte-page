@@ -8,6 +8,7 @@ export default {
 import {ref, reactive, onActivated, onDeactivated, watchEffect, computed} from 'vue';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import {ElMessage} from 'element-plus';
 import {Delete, Plus, Edit, Check} from '@element-plus/icons';
 import {userMyDayKey} from '/@/utils/constants';
 import AddPeriodDialog from './AddPeriod.vue';
@@ -23,15 +24,14 @@ const isPhone = computed(() => store.state.application.isPhone);
 const isEditAll = ref(false);
 
 const oneHour = 60;
-
-const startTime = ref(8 * oneHour); // offset
-const startLabel = ref('起床啦');
 const time = ref(0);
-const endTime = ref(16 * oneHour);
-const endLabel = ref('睡觉啦');
 
 const myDayConfigLocal = JSON.parse(localStorage.getItem(userMyDayKey));
 
+const startTime = ref(myDayConfigLocal?.startTime || 8 * oneHour); // offset
+const startLabel = ref(myDayConfigLocal?.startLabel || '起床啦');
+const endTime = ref(myDayConfigLocal?.endTime || 16 * oneHour);
+const endLabel = ref(myDayConfigLocal?.endLabel || '睡觉啦');
 const timePoints = reactive(myDayConfigLocal?.timePoints || [0, 30, oneHour, 2 * oneHour, 15 * oneHour, 16 * oneHour]);
 const eventsName = reactive(myDayConfigLocal?.eventsName || [null, '起床', null, '学习', null, '洗漱']);
 
@@ -39,6 +39,10 @@ watchEffect(() => {
   const config = {
     timePoints,
     eventsName,
+    startTime: startTime.value,
+    startLabel: startLabel.value,
+    endTime: endTime.value,
+    endLabel: endLabel.value,
   };
   localStorage.setItem(userMyDayKey, JSON.stringify(config));
 });
@@ -70,11 +74,39 @@ const getFormatTime = (time) => {
  */
 const formatTimeValue = (time) => {
   if (time < 0) {
-    time = 24 * oneHour - (time % (24 * oneHour));
-  } else {
-    time = time % (24 * oneHour);
+    time = 24 * oneHour + (time % (24 * oneHour));
   }
+  time = time % (24 * oneHour);
   return time;
+};
+
+/**
+ * margeEventPoints
+ */
+const mergeNull = () => {
+  if (timePoints[timePoints.length - 1] < endTime.value) {
+    timePoints.push(endTime.value);
+    eventsName.push(null);
+  }
+  for (let i = 1; i < timePoints.length; ++i) {
+    if (eventsName[i - 1] === eventsName[i] && i > 1) {
+      timePoints.splice(i - 1, 1);
+      eventsName.splice(i - 1, 1);
+      i = i - 2;
+      continue;
+    }
+    if (timePoints[i - 1] >= timePoints[i]) {
+      timePoints.splice(i - 1, 1);
+      eventsName.splice(eventsName[i - 1] === null ? i - 1 : i, 1);
+      i = i - 2;
+      continue;
+    }
+    if (timePoints[i] > endTime.value) {
+      timePoints.splice(i, 1);
+      eventsName.splice(i, 1);
+      --i;
+    }
+  }
 };
 
 // add period
@@ -87,25 +119,56 @@ const openAddDialog = (index, min, max) => {
     type: 'add',
     min: min,
     max: max,
-    timeRange: [min , max],
+    timeRange: [min, max],
   };
   addPeriodDialogRef.value.openDialog(config);
 };
 
 const openEditDialog = (index) => {
-  alert('还没开发！Not developed yet! ');
+  addPeriodDialogIndex.value = index;
+  let min = eventsName[index - 1]  === null ? timePoints[index - 2] : timePoints[index - 1];
+  let max = eventsName[index + 1] === null ? timePoints[index + 1] : timePoints[index];
+  const timeRange = [timePoints[index - 1], timePoints[index]];
+  const name = eventsName[index];
+  const config = {
+    type: 'edit',
+    name,
+    min,
+    max,
+    timeRange,
+  };
+  addPeriodDialogRef.value.openDialog(config);
 };
 
 const openEditStartDialog = () => {
-  const min = timePoints[timePoints.length - 1];
-  const max = (eventsName[1] === null ? timePoints[1] : timePoints[0]) + 24 * oneHour;
-
+  let min;
+  if (timePoints.length > 2) {
+    min = eventsName[timePoints.length - 1] === null ? formatTimeValue(timePoints[timePoints.length - 2] - endTime.value) : 0;
+  } else {
+    min = timePoints[1];
+  }
+  let max = formatTimeValue(eventsName[1] === null ? timePoints[1] : timePoints[0]);
+  let time = 0;
+  if (max <= min) {
+    max += 24 * oneHour;
+    time += 24 * oneHour;
+  }
+  if (formatTimeValue(max - min) === 0 && timePoints.length > 2) {
+    ElMessage({
+      showClose: true,
+      dangerouslyUseHTMLString: true,
+      message: 'It seems that you cannot change the wake up time yet!<br> Notice that the sleep time will change together! ',
+      type: 'warning',
+      duration: 5000,
+    });
+    return;
+  }
   const config = {
     type: 'start',
     name: startLabel.value,
     min,
     max,
-    time: 0,
+    time,
   };
   addPeriodDialogRef.value.openDialog(config);
 };
@@ -144,54 +207,38 @@ const addPeriod = (index, form) => {
 };
 
 const editPeriod = (index, form) => {
-
+  const {name, timeRange, max} = form;
+  const [start, end] = timeRange;
+  timePoints.splice(index, 1, start, end, max);
+  eventsName.splice(index, 1, null, name, null);
+  mergeNull();
 };
 
 const editStart = (form) => {
   startLabel.value = form.name;
   startTime.value = formatTimeValue(form.time + startTime.value);
+  timePoints.forEach((time, index) => {
+    (timePoints[index] = formatTimeValue(time - form.time));
+  });
+  if (timePoints[0] !== 0) {
+    timePoints.unshift(0);
+    eventsName.unshift(null);
+  }
+  mergeNull();
+  getNowTime();
 };
 
 const editEnd = (form) => {
   endLabel.value = form.name;
   endTime.value = form.time || 24 * oneHour;
-  if (eventsName[timePoints.length - 1] === null) {
-    if (timePoints[timePoints.length - 2] === endTime.value) {
-        timePoints.pop();
-        eventsName.pop();
-    } else {
-      timePoints[timePoints.length - 1] = endTime.value;
-    }
-  } else {
-    if (endTime.value > timePoints[timePoints.length - 1]) {
-      timePoints.push(endTime.value);
-      eventsName.push(null);
-    }
-  }
-
-  // if (endTime.value > timePoints[timePoints.length - 1]) {
-  //   if (eventsName[timePoints.length - 1] !== null) {
-  //     timePoints.push(endTime.value);
-  //     eventsName.push(null);
-  //   } else {
-  //
-  //   }
-  //
-  // } else if (endTime.value === timePoints[timePoints.length - 1] && eventsName[timePoints.length - 1] === null){
-  //   timePoints.pop();
-  //   eventsName.pop();
-  // }
+  timePoints.push(endTime.value);
+  eventsName.push(null);
+  mergeNull();
 };
 
 const deletePeriod = (index) => {
   eventsName[index] = null;
-  for (let i = 2; i < timePoints.length; ++i) {
-    if (eventsName[i - 1] === null && eventsName[i] === null) {
-      timePoints.splice(i - 1, 1);
-      eventsName.splice(i - 1, 1);
-      --i;
-    }
-  }
+  mergeNull();
 };
 </script>
 
@@ -202,9 +249,6 @@ const deletePeriod = (index) => {
   >
     <el-scrollbar>
       <nav-top-bar v-if="isPhone" />
-      <p>{{ startTime }}</p>
-      <p>{{ timePoints }}</p>
-      <p>{{ eventsName }}</p>
       <div class="my-day-card card-block">
         <!-- top block -->
         <template v-if="isPhone">
@@ -223,7 +267,7 @@ const deletePeriod = (index) => {
           </div>
         </template>
         <h1>{{ getFormatTime(time) }}</h1>
-        <h1 v-if="time + startTime > timePoints[timePoints.length - 1]">
+        <h1 v-if="time > timePoints[timePoints.length - 1]">
           It's getting late, time for bed!
         </h1>
         <!-- my day period block start -->
@@ -301,6 +345,9 @@ const deletePeriod = (index) => {
             </div>
           </div>
         </div>
+        <h2 v-if="formatTimeValue(endTime) === 0">
+          No sleep, dear?
+        </h2>
       </div>
       <add-period-dialog
         ref="addPeriodDialogRef"
@@ -387,7 +434,7 @@ const deletePeriod = (index) => {
   &:hover {
     background: var(--hover);
 
-    .action-button.is-pc  {
+    .action-button.is-pc {
       display: inline-flex;
     }
   }

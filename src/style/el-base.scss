@@ -5,21 +5,31 @@ body {
     outline: none;
   }
 
+  .el-message {
+    background-color: var(--el-background-color-base);
+    border-color: var(--el-border-color-base);
+
+    .el-message__closeBtn {
+      position: initial;
+      transform: initial;
+    }
+  }
+
   .el-dialog {
     --el-dialog-width: 80%;
   }
 
   .el-radio-button {
-    --el-button-default-background-color: var(--background-button)
+    --el-button-default-background-color: var(--el-background-color-base)
   }
 
   .el-color-picker__panel.el-popper {
-    background-color: var(--el-color-white);
+    background-color: var(--el-background-color-base);
   }
 
   .el-radio-button--mini {
     margin: 2px;
-    border: 1px solid var(--font-color-lighter) !important;
+    border: 1px solid var(--el-border-color-base) !important;
     border-radius: var(--el-border-radius-base) !important;
 
     &.is-active {
