@@ -1,22 +1,17 @@
 <script setup>
 import {computed, reactive, ref, watchEffect} from 'vue';
 import {useStore} from 'vuex';
+import {formatTimeToday} from '/@/utils';
 
 const store = useStore();
 
 const isPhone = computed(() => store.state.application.isPhone);
 
-const props = defineProps({
-  format: {
-    type: Function,
-    default: (time) => String(time),
-  },
-});
-
 const emit = defineEmits(['add', 'edit', 'start', 'end']);
 
 const visible = ref(false);
 const config = ref({
+  startTime: 0,
   type: 'add', // add edit start end
   name: '',
   min: 0,
@@ -26,6 +21,9 @@ const config = ref({
 });
 const isTime = computed(() => config.value.hasOwnProperty('time'));
 const marks = ref({});
+const formatTime = (time) => {
+  return formatTimeToday(time, config.value.startTime);
+};
 
 const TitleMap =  {
   add: 'Add a Period',
@@ -55,8 +53,8 @@ const rules = {
 
 watchEffect(() => {
   marks.value = {
-    [config.value.min]: props.format(config.value.min),
-    [config.value.max]: props.format(config.value.max),
+    [config.value.min]: formatTime(config.value.min),
+    [config.value.max]: formatTime(config.value.max),
   };
 });
 
@@ -118,14 +116,14 @@ defineExpose({
         prop="time"
       >
         {{
-          props.format(form.time)
+          formatTime(form.time)
         }}
         <el-slider
           v-model="form.time"
           :step="10"
           :min="config.min"
           :max="config.max"
-          :format-tooltip="props.format"
+          :format-tooltip="formatTime"
           :marks="marks"
         />
       </el-form-item>
@@ -135,9 +133,9 @@ defineExpose({
         prop="timeRange"
       >
         {{
-          props.format(form.timeRange[0])
+          formatTime(form.timeRange[0])
         }}-{{
-          props.format(form.timeRange[1])
+          formatTime(form.timeRange[1])
         }}
         <el-slider
           v-model="form.timeRange"
@@ -145,7 +143,7 @@ defineExpose({
           :step="10"
           :min="config.min"
           :max="config.max"
-          :format-tooltip="props.format"
+          :format-tooltip="formatTime"
           :marks="marks"
         />
       </el-form-item>
