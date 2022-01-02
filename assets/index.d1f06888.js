@@ -1,0 +1,2 @@
+/* empty css                     */import{_ as a}from"./index.cffd295a.js";import{A as s,o,h as _,p as r,q as c,i as n,t as l}from"./vendor.77f6f7a5.js";const d={id:"view-home-page"},i={name:"UserHome"},p=Object.assign(i,{setup(f){const e="wiidede website";return(m,u)=>{const t=s;return o(),_("div",d,[r(t,null,{default:c(()=>[n("h1",null,l(e))]),_:1})])}}});var h=a(p,[["__scopeId","data-v-fbd0771a"]]);export{h as default};
+//# sourceMappingURL=index.d1f06888.js.map

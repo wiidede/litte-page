@@ -1,2 +1,0 @@
-import{E as o}from"./scrollbar.147079f5.js";import{_ as s}from"./index.61d8cca3.js";import{o as a,f as _,l as r,m as c,g as n,t as l}from"./vendor.532128bf.js";const d={id:"view-home-page"},i={name:"UserHome"};function p(m){const e="wiidede website";return(u,x)=>{const t=o;return a(),_("div",d,[r(t,null,{default:c(()=>[n("h1",null,l(e))]),_:1})])}}const f=Object.assign(i,{setup:p});var h=s(f,[["__scopeId","data-v-fbd0771a"]]);export{h as default};
-//# sourceMappingURL=index.5b8d5557.js.map
