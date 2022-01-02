@@ -9,7 +9,7 @@ const version = computed(() => store.state.version);
 
 <template>
   <div id="view-about">
-    <el-scrollbar ref="scrollViewRef">
+    <el-scrollbar view-class="view-about-view">
       <go-back-bar
         ref="goBackBarRef"
         class="go-back-bar"
@@ -31,8 +31,11 @@ const version = computed(() => store.state.version);
   height: 100%;
   font-family: baloo_2regular, sans-serif;
   text-align: center;
-  max-width: 720px;
-  margin: 0 auto;
+
+  :deep(.view-about-view) {
+    max-width: 720px;
+    margin: 0 auto;
+  }
 }
 
 .go-back-bar {

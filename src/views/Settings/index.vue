@@ -16,7 +16,7 @@ const settings = [
 
 <template>
   <div id="view-settings">
-    <el-scrollbar>
+    <el-scrollbar view-class="view-settings-view">
       <h1>Settings</h1>
       <div
         v-for="setting in settings"
@@ -34,11 +34,14 @@ const settings = [
 #view-settings {
   height: 100%;
   box-sizing: border-box;
-  max-width: 720px;
-  margin: 0 auto;
   font-size: 18px;
   user-select: none;
   -webkit-user-drag: none;
+
+  :deep(.view-settings-view) {
+    max-width: 720px;
+    margin: 0 auto;
+  }
 
   h1 {
     font-size: 32px;

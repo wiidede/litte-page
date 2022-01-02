@@ -6,8 +6,11 @@ body {
   }
 
   .el-message {
-    background-color: var(--el-background-color-base);
-    border-color: var(--el-border-color-base);
+
+    &.el-message--warning {
+      background-color: var(--el-color-warning-lighter);
+      border-color: var(--el-color-warning);
+    }
 
     .el-message__closeBtn {
       position: initial;

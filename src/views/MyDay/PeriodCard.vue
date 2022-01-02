@@ -1,5 +1,5 @@
 <script setup>
-import {Delete, Plus, Edit, Check} from '@element-plus/icons';
+import {Delete, Plus, Edit, Check, Top, Bottom} from '@element-plus/icons';
 import {computed, ref} from 'vue';
 import {formatTimeValue, formatTimeToday} from '/@/utils';
 
@@ -29,6 +29,14 @@ const props = defineProps({
       endLabel: '睡觉啦',
     }),
   },
+  otherDay: {
+    type: Boolean,
+    default: false,
+  },
+  actionBar: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['add', 'edit', 'delete', 'start', 'end']);
@@ -39,7 +47,10 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
 </script>
 
 <template>
-  <div class="my-day-card card-block">
+  <div
+    class="my-day-card card-block"
+    :class="{'other-day': otherDay}"
+  >
     <!-- top block -->
     <template v-if="isPhone">
       <div
@@ -56,6 +67,20 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
         </el-icon>
       </div>
     </template>
+    <div
+      v-if="actionBar"
+      class="action-bar"
+    >
+      <el-icon @click="emit('up-day')">
+        <top />
+      </el-icon>
+      <el-icon @click="emit('delete-day')">
+        <delete />
+      </el-icon>
+      <el-icon @click="emit('down-day')">
+        <bottom />
+      </el-icon>
+    </div>
     <h1 v-if="time > timePoints[timePoints.length - 1]">
       It's getting late, time for bed!
     </h1>
@@ -108,7 +133,7 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
         </div>
       </div>
       <el-progress
-        v-if="eventsName[index] && timePoints[index - 1] <= time && time < period"
+        v-if="!otherDay && eventsName[index] && timePoints[index - 1] <= time && time < period"
         :text-inside="true"
         :stroke-width="24"
         :percentage="(time - timePoints[index - 1]) * 100 / (period - timePoints[index - 1])"
@@ -136,7 +161,7 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
         </div>
       </div>
     </div>
-    <h2 v-if="formatTimeToday(wakeAndSleep.endTime, wakeAndSleep.startTime) === 0">
+    <h2 v-if="formatTimeValue(wakeAndSleep.endTime) === 0">
       No sleep, dear?
     </h2>
   </div>
@@ -148,6 +173,10 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
   padding: 16px;
   position: relative;
   overflow: hidden;
+
+  &.other-day {
+    opacity: 0.5;
+  }
 
   .corner {
     position: absolute;
@@ -170,6 +199,17 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
     .el-icon {
       --font-size: 16px;
     }
+  }
+}
+
+.action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  .el-icon {
+    cursor: pointer;
   }
 }
 

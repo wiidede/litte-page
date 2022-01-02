@@ -27,4 +27,12 @@ export default defineConfig({
   build: {
     sourcemap: true,
   },
+  css:{
+    postcss:{
+      plugins: [
+        // 前缀追加
+        require('autoprefixer'),
+      ],
+    },
+  },
 });

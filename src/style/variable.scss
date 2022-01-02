@@ -1,3 +1,5 @@
+$text-color: lighten(#800, 20%);
+
 :root {
   // color
   --main: #FF9A76;
@@ -6,6 +8,10 @@
   --main-extra-light: #FF9A7680;
   --select: #FF9A7660;
   --hover: #FF9A7620;
+  --color-info: #909399;
+  --color-success: #67c23a;
+  --color-warning: #e6a23c;
+  --color-error: #f56c6c;
 
   // theme
   --background: white;
@@ -18,6 +24,10 @@
   --font-color-extra-light: #d0d0d0;
   --color-white: white;
   --color-black: black;
+  --color-info-light: #{lighten(#909399, 50%)};
+  --color-success-light: #{lighten(#67c23a, 50%)};
+  --color-warning-light: #{lighten(#e6a23c, 50%)};
+  --color-error-light: #{lighten(#f56c6c, 50%)};
 }
 
 
@@ -32,4 +42,8 @@
   --font-color-extra-light: #404040;
   --color-white: black;
   --color-black: white;
+  --color-info-light: #{darken(#909399, 50%)};
+  --color-success-light: #{darken(#67c23a, 50%)};
+  --color-warning-light: #{darken(#e6a23c, 50%)};
+  --color-error-light: #{darken(#f56c6c, 50%)};
 }

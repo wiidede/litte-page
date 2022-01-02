@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
+    "autoprefixer": "^10.4.1",
     "dayjs": "^1.10.7",
-    "element-plus": "^1.2.0-beta.3",
+    "element-plus": "^1.3.0-beta.1",
     "lodash": "^4.17.21",
-    "unplugin-vue-components": "^0.17.2",
-    "vue": "^3.2.16",
+    "unplugin-vue-components": "^0.17.11",
+    "vue": "^3.2.26",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
@@ -21,7 +22,7 @@
     "@vitejs/plugin-vue": "^1.9.3",
     "eslint": "^8.2.0",
     "eslint-plugin-vue": "^8.0.3",
-    "sass": "^1.43.4",
+    "sass": "^1.45.2",
     "vite": "^2.6.4"
   }
 }

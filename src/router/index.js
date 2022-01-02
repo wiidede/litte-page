@@ -1,4 +1,5 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
+// import { ElLoading } from 'element-plus';
 
 const routes = [
 	{path: '/', name: 'Home', component: () => import('/@/views/Home/index.vue')},
@@ -8,7 +9,22 @@ const routes = [
 	{path: '/my-day', name: 'MyDay', component: () => import('/@/views/MyDay/index.vue')},
 ];
 
-export default createRouter({
-	routes,
-	history: createWebHashHistory(),
+const router = createRouter({
+  routes,
+  history: createWebHashHistory(),
 });
+
+// let loadingInstance = null;
+
+router.beforeEach((to, from, next) => {
+  // loadingInstance = ElLoading.service({
+  //   fullscreen: true,
+  // });
+  next();
+});
+
+router.afterEach(() => {
+  // loadingInstance.close();
+});
+
+export default router;

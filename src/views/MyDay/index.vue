@@ -8,6 +8,7 @@ export default {
 import {ref, onActivated, onDeactivated, watchEffect, computed} from 'vue';
 import {ElMessage} from 'element-plus';
 import {cloneDeep} from 'lodash';
+import {Edit, Plus, Check} from '@element-plus/icons';
 import {userMyDayKey} from '/@/utils/constants';
 import {isObject, formatTimeValue, getFormattedTime} from '/@/utils';
 import AddPeriodDialog from './AddPeriod.vue';
@@ -62,6 +63,10 @@ if (isObject(myDayConfigLocal)) {
     myDayList.value = [cloneDeep(defaultOneDay)];
   }
 }
+// insert key
+myDayList.value.forEach(day => {
+  day.key_id = Symbol();
+});
 
 watchEffect(() => {
   localStorage.setItem(userMyDayKey, JSON.stringify(myDayList.value));
@@ -175,7 +180,7 @@ const openEditStartDialog = (dayIndex) => {
   }
   if (formatTimeValue(max - min) === 0 && timePoints.length > 2) {
     ElMessage({
-      showClose: true,
+      showClose: false,
       dangerouslyUseHTMLString: true,
       message: 'It seems that you cannot change the wake up time yet!<br> Notice that the sleep time will change together! ',
       type: 'warning',
@@ -280,35 +285,94 @@ const editEnd = (dayIndex, form) => {
   mergeNull(dayIndex);
 };
 
-const addDay = () => {
-  myDayList.value.push(cloneDeep(defaultOneDay));
+// edit days
+const editDays = ref(false);
+
+const addDay = (index) => {
+  myDayList.value.splice(index, 0, cloneDeep(defaultOneDay));
+};
+
+const deleteDay = (index) => {
+  myDayList.value.splice(index, 1);
+};
+
+const upDay = (index) => {
+  if (index < 1) {
+    ElMessage.warning('Now it\'s the first one!');
+  } else {
+    [myDayList.value[index - 1], myDayList.value[index]] = [myDayList.value[index], myDayList.value[index - 1]];
+  }
+};
+
+const downDay = (index) => {
+  if (index > myDayList.value.length - 2) {
+    ElMessage.warning('Now it\'s the last one!');
+  } else {
+    [myDayList.value[index + 1], myDayList.value[index]] = [myDayList.value[index], myDayList.value[index + 1]];
+  }
 };
 </script>
 
 <template>
   <div
     id="view-my-day"
-    :class="{'is-phone': isPhone}"
+    :class="[isPhone ? 'is-phone' : 'is-pc', {'editing-day': editDays}]"
   >
-    <el-scrollbar>
+    <el-scrollbar view-class="view-my-day-view">
       <nav-top-bar v-if="isPhone" />
-      <h1>{{ timeFormatted }}</h1>
-      <period-card
+      <h1 class="title center">
+        {{ timeFormatted }}
+        <el-icon
+          class="edit-days-button"
+          @click="editDays = !editDays"
+        >
+          <template v-if="editDays">
+            <check />
+          </template>
+          <template v-else>
+            <edit />
+          </template>
+        </el-icon>
+      </h1>
+      <div
         v-for="(oneDay, index) in myDayList"
-        :key="`one-day-${index}`"
-        :is-phone="isPhone"
-        :time-system="time"
-        :time-points="oneDay.timePoints"
-        :events-name="oneDay.eventsName"
-        :wake-and-sleep="oneDay.wakeAndSleep"
-        @add="openAddDialog(index, $event)"
-        @edit="openEditDialog(index, $event)"
-        @delete="deletePeriod(index, $event)"
-        @start="openEditStartDialog"
-        @end="openEditEndDialog"
-      />
-      <div @click="addDay">
-        add one day
+        :key="oneDay.key_id"
+      >
+        <div
+          v-if="editDays"
+          class="day-action-button center"
+          @click="addDay(index)"
+        >
+          <el-icon>
+            <plus />
+          </el-icon>
+        </div>
+        <period-card
+          :is-phone="isPhone"
+          :time-system="time"
+          :time-points="oneDay.timePoints"
+          :events-name="oneDay.eventsName"
+          :wake-and-sleep="oneDay.wakeAndSleep"
+          :other-day="index !== 0 && !editDays"
+          :action-bar="editDays"
+          @add="openAddDialog(index, $event)"
+          @edit="openEditDialog(index, $event)"
+          @delete="deletePeriod(index, $event)"
+          @start="openEditStartDialog(index)"
+          @end="openEditEndDialog(index)"
+          @delete-day="deleteDay(index)"
+          @up-day="upDay(index)"
+          @down-day="downDay(index)"
+        />
+      </div>
+      <div
+        v-if="editDays"
+        class="day-action-button center"
+        @click="addDay(myDayList.length)"
+      >
+        <el-icon>
+          <plus />
+        </el-icon>
       </div>
       <add-period-dialog
         ref="addPeriodDialogRef"
@@ -325,11 +389,14 @@ const addDay = () => {
 #view-my-day {
   height: 100%;
   box-sizing: border-box;
-  max-width: 720px;
-  margin: 0 auto;
   font-size: 18px;
   user-select: none;
   -webkit-user-drag: none;
+
+  :deep(.view-my-day-view) {
+    max-width: 720px;
+    margin: 0 auto;
+  }
 
   .comp-nav-top-bar {
     margin: 0 16px;
@@ -347,10 +414,53 @@ const addDay = () => {
     .period-line {
       justify-content: initial;
     }
+
+    .edit-days-button {
+      display: initial;
+    }
+  }
+
+  &.is-pc {
+    .title:hover {
+      .edit-days-button {
+        display: initial;
+      }
+    }
+  }
+
+  &.editing-day {
+    .edit-days-button {
+      display: initial;
+    }
+  }
+
+  .day-action-button {
+    cursor: pointer;
+    font-size: 16px;
+    margin: 16px;
+  }
+
+  .title {
+    position: relative;
+  }
+
+  .edit-days-button {
+    position: absolute;
+    right: 16px;
+    margin: 0 auto;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
   }
 }
 
 :deep(.el-dialog) {
   max-width: 520px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
