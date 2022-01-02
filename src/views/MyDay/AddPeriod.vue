@@ -158,6 +158,10 @@ defineExpose({
 
 <style lang="scss" scoped>
 
+:deep(.el-form-item__content) {
+  display: initial;
+}
+
 .el-slider {
   word-break: initial;
   transform: translateY(-12px);

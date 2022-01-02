@@ -176,6 +176,8 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
 
   &.other-day {
     opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
   }
 
   .corner {
