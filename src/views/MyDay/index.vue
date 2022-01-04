@@ -146,7 +146,7 @@ const openEditDialog = (dayIndex, periodIndex) => {
   const wakeAndSleep = myDayList.value[dayIndex].wakeAndSleep;
   const timePoints = myDayList.value[dayIndex].timePoints;
   const eventsName = myDayList.value[dayIndex].eventsName;
-  let min = eventsName[periodIndex - 1]  === null ? timePoints[periodIndex - 2] : timePoints[periodIndex - 1];
+  let min = eventsName[periodIndex - 1] === null ? timePoints[periodIndex - 2] : timePoints[periodIndex - 1];
   let max = eventsName[periodIndex + 1] === null ? timePoints[periodIndex + 1] : timePoints[periodIndex];
   const timeRange = [timePoints[periodIndex - 1], timePoints[periodIndex]];
   const name = eventsName[periodIndex];
@@ -311,6 +311,13 @@ const downDay = (index) => {
     [myDayList.value[index + 1], myDayList.value[index]] = [myDayList.value[index], myDayList.value[index + 1]];
   }
 };
+
+// affix
+const affixRef = ref(null);
+
+onActivated(() => {
+  affixRef.value && affixRef.value.update();
+});
 </script>
 
 <template>
@@ -320,20 +327,26 @@ const downDay = (index) => {
   >
     <el-scrollbar view-class="view-my-day-view">
       <nav-top-bar v-if="isPhone" />
-      <h1 class="title center">
-        {{ timeFormatted }}
-        <el-icon
-          class="edit-days-button"
-          @click="editDays = !editDays"
+      <div class="title-line">
+        <h1 class="title">
+          {{ timeFormatted }}
+        </h1>
+        <el-affix
+          ref="affixRef"
         >
-          <template v-if="editDays">
-            <check />
-          </template>
-          <template v-else>
-            <edit />
-          </template>
-        </el-icon>
-      </h1>
+          <el-icon
+            class="edit-days-button"
+            @click="editDays = !editDays"
+          >
+            <template v-if="editDays">
+              <check />
+            </template>
+            <template v-else>
+              <edit />
+            </template>
+          </el-icon>
+        </el-affix>
+      </div>
       <div
         v-for="(oneDay, index) in myDayList"
         :key="oneDay.key_id"
@@ -414,21 +427,19 @@ const downDay = (index) => {
     }
 
     .edit-days-button {
-      display: initial;
+      opacity: initial;
     }
   }
 
   &.is-pc {
-    .title:hover {
-      .edit-days-button {
-        display: initial;
-      }
+    .edit-days-button:hover {
+      opacity: initial;
     }
   }
 
   &.editing-day {
     .edit-days-button {
-      display: initial;
+      opacity: initial;
     }
   }
 
@@ -438,17 +449,27 @@ const downDay = (index) => {
     margin: 16px;
   }
 
+  .title-line {
+    display: flex;
+    align-items: center;
+
+    .el-affix {
+      width: 40px;
+    }
+  }
+
   .title {
-    position: relative;
+    margin-left: 40px;
+    width: calc(100% - 40px - 40px);
+    text-align: center;
   }
 
   .edit-days-button {
-    position: absolute;
-    right: 16px;
-    margin: 0 auto;
+    padding: 10px;
+    transform: translateX(-10px);
     font-size: 20px;
     cursor: pointer;
-    display: none;
+    opacity: 0.2;
   }
 }
 

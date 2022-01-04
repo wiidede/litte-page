@@ -17,13 +17,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="comp-nav-top-bar card-block">
-    <i
-      class="iconfont"
-      :class="navigationShow ? 'icon-checkbox-blank-circle-line' : 'icon-layout-left-2-line'"
-      @click="toggleNavigationShow"
-    />
-  </div>
+  <el-affix>
+    <div class="comp-nav-top-bar card-block">
+      <i
+        class="iconfont"
+        :class="navigationShow ? 'icon-checkbox-blank-circle-line' : 'icon-layout-left-2-line'"
+        @click="toggleNavigationShow"
+      />
+    </div>
+  </el-affix>
 </template>
 
 <style lang="scss" scoped>
@@ -33,7 +35,7 @@ onUnmounted(() => {
   box-sizing: border-box;
   height: 40px;
 
-  & > div {
+  & > i {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
