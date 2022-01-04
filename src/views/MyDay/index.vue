@@ -354,7 +354,7 @@ const downDay = (index) => {
           :events-name="oneDay.eventsName"
           :wake-and-sleep="oneDay.wakeAndSleep"
           :other-day="index !== 0 && !editDays"
-          :action-bar="editDays"
+          :is-editing="editDays"
           @add="openAddDialog(index, $event)"
           @edit="openEditDialog(index, $event)"
           @delete="deletePeriod(index, $event)"
@@ -390,8 +390,6 @@ const downDay = (index) => {
   height: 100%;
   box-sizing: border-box;
   font-size: 18px;
-  user-select: none;
-  -webkit-user-drag: none;
 
   :deep(.view-my-day-view) {
     max-width: 720px;

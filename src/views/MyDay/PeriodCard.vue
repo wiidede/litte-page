@@ -33,7 +33,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  actionBar: {
+  isEditing: {
     type: Boolean,
     default: false,
   },
@@ -49,26 +49,26 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
 <template>
   <div
     class="my-day-card card-block"
-    :class="{'other-day': otherDay}"
+    :class="{'other-day': otherDay, 'card-show': !isEditing}"
   >
     <!-- top block -->
-    <template v-if="isPhone">
-      <div
-        class="corner"
-        @click="isEditAll = !isEditAll"
-      />
-      <div
-        class="edit-all"
-        @click="isEditAll = !isEditAll"
-      >
-        <el-icon>
-          <check v-if="isEditAll" />
-          <edit v-else />
-        </el-icon>
-      </div>
-    </template>
+    <!--    <template v-if="isPhone">-->
+    <!--      <div-->
+    <!--        class="corner"-->
+    <!--        @click="isEditAll = !isEditAll"-->
+    <!--      />-->
+    <!--      <div-->
+    <!--        class="edit-all"-->
+    <!--        @click="isEditAll = !isEditAll"-->
+    <!--      >-->
+    <!--        <el-icon>-->
+    <!--          <check v-if="isEditAll" />-->
+    <!--          <edit v-else />-->
+    <!--        </el-icon>-->
+    <!--      </div>-->
+    <!--    </template>-->
     <div
-      v-if="actionBar"
+      v-if="isEditing"
       class="action-bar"
     >
       <el-icon @click="emit('up-day')">
@@ -90,7 +90,7 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
         <div>{{ formatTimeToday(0, wakeAndSleep.startTime) }} {{ wakeAndSleep.startLabel }}</div>
         <div
           class="action-button"
-          :class="{'show-action-button': isPhone && isEditAll, 'is-pc': !isPhone}"
+          :class="{'show-action-button': isPhone && isEditing, 'is-pc': !isPhone}"
         >
           <el-icon @click="emit('start')">
             <edit />
@@ -122,7 +122,7 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
         </div>
         <div
           class="action-button"
-          :class="{'show-action-button': isPhone && isEditAll, 'is-pc': !isPhone}"
+          :class="{'show-action-button': isPhone && isEditing, 'is-pc': !isPhone}"
         >
           <el-icon @click="emit('edit', index)">
             <edit />
@@ -153,7 +153,7 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
         <div>{{ formatTimeToday(wakeAndSleep.endTime, wakeAndSleep.startTime) }} {{ wakeAndSleep.endLabel }}</div>
         <div
           class="action-button"
-          :class="{'show-action-button': isPhone && isEditAll, 'is-pc': !isPhone}"
+          :class="{'show-action-button': isPhone && isEditing, 'is-pc': !isPhone}"
         >
           <el-icon @click="emit('end')">
             <edit />
@@ -176,6 +176,11 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
 
   &.other-day {
     opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &.card-show {
     pointer-events: none;
     user-select: none;
   }
