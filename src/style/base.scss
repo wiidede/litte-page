@@ -21,3 +21,18 @@ a {
   background: var(--background);
   transition: background-color ease .3s;
 }
+
+// nprogress
+#nprogress .bar {
+  background: var(--main);
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--main), 0 0 5px var(--main);
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--main);
+  border-left-color: var(--main);
+}
