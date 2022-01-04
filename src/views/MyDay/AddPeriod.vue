@@ -100,6 +100,7 @@ defineExpose({
       label-width="100px"
       :model="form"
       :rules="rules"
+      @submit.prevent
     >
       <el-form-item
         label="Name:"

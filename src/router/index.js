@@ -1,5 +1,6 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
-import { ElLoading } from 'element-plus';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 const routes = [
 	{path: '/', name: 'Home', component: () => import('/@/views/Home/index.vue')},
@@ -14,17 +15,13 @@ const router = createRouter({
   history: createWebHashHistory(),
 });
 
-let loadingInstance = null;
-
 router.beforeEach((to, from, next) => {
-  loadingInstance = ElLoading.service({
-    fullscreen: true,
-  });
+  NProgress.start();
   next();
 });
 
 router.afterEach(() => {
-  loadingInstance.close();
+  NProgress.done();
 });
 
 export default router;
