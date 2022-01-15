@@ -140,7 +140,7 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
         :format="percentage => percentage.toFixed(3) + '%'"
       />
       <el-icon
-        v-if="index > 0 && !eventsName[index]"
+        v-if="index > 0 && !eventsName[index] && isEditing"
         class="add-button"
         @click="emit('add', index)"
       >
