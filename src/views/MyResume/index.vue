@@ -46,19 +46,19 @@ const awards = [
               男 22岁（1999年07月） <br v-if="isPhone">苏州 1.5年
             </div>
             <div class="info-line">
-              <span style="margin-right: 12px"><i class="iconfont icon-smartphone-line"/>17625809601</span>
-              <a href="mailto:wiixdede@gmail.com"><i class="iconfont icon-mail-line"/>wiixdede@gmail.com</a>
+              <span style="margin-right: 12px"><i class="iconfont icon-smartphone-line" />17625809601</span>
+              <a href="mailto:wiixdede@gmail.com"><i class="iconfont icon-mail-line" />wiixdede@gmail.com</a>
             </div>
             <div class="info-line">
               <a
                 href="https://wiidede.github.io"
                 target="_blank"
                 style="margin-right: 12px"
-              ><i class="iconfont icon-blog-solid"/>wiidede.github.io</a>
+              ><i class="iconfont icon-blog-solid" />wiidede.github.io</a>
               <a
                 href="https://github.com/wiidede"
                 target="_blank"
-              ><i class="iconfont icon-github-line"/>wiidede</a>
+              ><i class="iconfont icon-github-line" />wiidede</a>
             </div>
           </div>
           <div
@@ -82,14 +82,16 @@ const awards = [
         </h2>
         <strong class="project-title">智能运维项目（苏州科达）</strong>
         <div>在实习的时候只是参与开发页面的任务。</div>
-        <div>转正之后除了页面开发，开始涉及到框架的修改，比如动态权限变化、三方登录。同时也针对某些页面进行性能优化，UI细节优化，组件代码重构、尽量减少项目中es5的写法、拒绝
+        <div>
+          转正之后除了页面开发，开始涉及到框架的修改，比如动态权限变化、三方登录。同时也针对某些页面进行性能优化，UI细节优化，组件代码重构、尽量减少项目中es5的写法、拒绝
           <pre>Vue</pre>
           项目中使用
           <pre>JQuery</pre>
           。
         </div>
         <strong class="project-title">家庭服务机器人、水表识别（大学期间）</strong>
-        <div>使用
+        <div>
+          使用
           <pre>ROS</pre>
           系统操作机器人（
           <pre>C ++</pre>
@@ -144,7 +146,7 @@ const awards = [
           class="online-site"
           href="https://wiidede.github.io/little-page/#/my-resume"
         >
-          <i class="iconfont icon-checkbox-blank-circle-line"/>
+          <i class="iconfont icon-checkbox-blank-circle-line" />
           online
         </a>
       </div>
