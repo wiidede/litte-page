@@ -12,6 +12,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-github-line:before {
+  content: "\e7d1";
+}
+
+.icon-blog-solid:before {
+  content: "\e631";
+}
+
+.icon-mail-line:before {
+  content: "\e6da";
+}
+
+.icon-smartphone-line:before {
+  content: "\e754";
+}
+
 .icon-checkbox-blank-circle-line:before {
   content: "\e848";
 }

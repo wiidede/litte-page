@@ -3,11 +3,17 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
 const routes = [
-	{path: '/', name: 'Home', component: () => import('/@/views/Home/index.vue')},
-	{path: '/settings', name: 'Settings', component: () => import('/@/views/Settings/index.vue')},
-	{path: '/settings/about', name: 'SettingsAbout', component: () => import('/@/views/Settings/About.vue')},
-	{path: '/invest-distribution', name: 'InvestDistribution', component: () => import('/@/views/Invest/Distribution.vue')},
-	{path: '/my-day', name: 'MyDay', component: () => import('/@/views/MyDay/index.vue')},
+  {path: '/', name: 'Home', component: () => import('/@/views/Home/index.vue')},
+  {path: '/settings', name: 'Settings', component: () => import('/@/views/Settings/index.vue')},
+  {path: '/settings/about', name: 'SettingsAbout', component: () => import('/@/views/Settings/About.vue')},
+  {
+    path: '/invest-distribution',
+    name: 'InvestDistribution',
+    component: () => import('/@/views/Invest/Distribution.vue'),
+  },
+  {path: '/my-day', name: 'MyDay', component: () => import('/@/views/MyDay/index.vue')},
+  {path: '/my-resume', name: 'MyDay', component: () => import('/@/views/MyResume/index.vue')},
+  {path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('/@/components/NotFound.vue')},
 ];
 
 const router = createRouter({

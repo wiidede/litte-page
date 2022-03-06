@@ -1,11 +1,12 @@
 <script setup>
-import {reactive, computed} from 'vue';
+import {computed} from 'vue';
 import {useStore} from 'vuex';
 
 const store = useStore();
 
 // color
-const colorList = reactive(['#FF9A76', '#FF9292', '#42B983', '#7579E7', '#19D3DA', '#056676', '#835858']);
+import {colorList} from '/@/utils/constants';
+
 const setColor = (color) => store.commit('settings/setColor', color);
 const colorActive = computed({
 	get: () => store.state.settings.color,

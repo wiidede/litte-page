@@ -1,7 +1,7 @@
 // initial state
 const state = () => ({
 	isPhone: false,
-	navigationShow: true,
+	navigationShow: !location.href.includes('resume'),
 });
 
 // getters
