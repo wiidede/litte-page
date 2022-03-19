@@ -32,7 +32,7 @@ watchEffect(() => {
 });
 
 // year
-const yaer = new Date().getFullYear();
+const year = new Date().getFullYear();
 </script>
 
 <template>
@@ -63,7 +63,7 @@ const yaer = new Date().getFullYear();
     <div
       class="copyright-info"
     >
-      {{ isCollapse ? '' : `Copyright © 2021 - ${yaer} Wiidede` }}
+      {{ isCollapse ? '' : `Copyright © 2021 - ${year} Wiidede` }}
     </div>
   </nav>
 </template>

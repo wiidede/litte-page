@@ -12,8 +12,8 @@ const routes = [
     component: () => import('/@/views/Invest/Distribution.vue'),
   },
   {path: '/my-day', name: 'MyDay', component: () => import('/@/views/MyDay/index.vue')},
-  {path: '/my-resume', name: 'MyDay', component: () => import('/@/views/MyResume/index.vue')},
-  {path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('/@/components/NotFound.vue')},
+  {path: '/my-resume', name: 'MyResume', component: () => import('/@/views/MyResume/index.vue')},
+  {path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('/@/components/NotFound.vue')},
 ];
 
 const router = createRouter({
