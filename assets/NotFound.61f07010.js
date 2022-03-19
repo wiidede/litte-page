@@ -1,2 +1,0 @@
-import{_ as d,g as t}from"./index.5537102d.js";import{o as c,h as r,i as e,j as a,a5 as i,a6 as p,Z as l}from"./vendor.965fbf44.js";const _=o=>(i("data-v-56826d26"),o=o(),p(),o),u={id:"not-found-view"},f=_(()=>e("h1",null,"404 Not Found!",-1)),v=_(()=>e("i",{class:"iconfont icon-arrow-left-s-line"},null,-1)),h=l(" Go back"),k=[v,h],m={setup(o){return(x,s)=>(c(),r("div",u,[f,e("strong",{class:"go-back",onClick:s[0]||(s[0]=(...n)=>a(t)&&a(t)(...n))},k)]))}};var B=d(m,[["__scopeId","data-v-56826d26"]]);export{B as default};
-//# sourceMappingURL=NotFound.61f07010.js.map
