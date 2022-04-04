@@ -21,8 +21,8 @@ const nextColor = () => store.commit('settings/nextColor');
 // content
 const skills = {
   proficient: ['Vue 2.0'],
-  familiar: ['Vue 3.0', 'JS', 'CSS', 'Html', 'Element UI'],
-  know: ['Webpack', 'Vite', 'TS', 'iconfont', 'Linux', 'Python', 'Tensor Flow', 'C ++', 'ROS'],
+  familiar: ['Vue 3.0', 'JS', 'CSS', 'Html', 'Element UI', 'React', 'Redux', 'TypeScript'],
+  know: ['Webpack', 'Vite', 'Linux', 'Python', 'Tensor Flow', 'C ++', 'ROS'],
 };
 
 const awards = [
@@ -89,6 +89,17 @@ const awards = [
           <pre>JQuery</pre>
           。
         </div>
+        <div>
+          同时也参与到了运维中台项目的开发（使用
+          <pre>React</pre>
+          +
+          <pre>TypeScript</pre>
+          +
+          <pre>antd</pre>
+          +
+          <pre>Redux</pre>
+          ）
+        </div>
         <strong class="project-title">家庭服务机器人、水表识别（大学期间）</strong>
         <div>
           使用
@@ -139,6 +150,7 @@ const awards = [
         <h2 class="title">
           个人特质
         </h2>
+        <div>对<pre>Vue</pre>源码有一定的理解。</div>
         <div>励志写出逻辑完整、简洁的代码。</div>
         <div>励志写出性能良好、设计优美的前端页面。</div>
         <div>独立审美；热爱科技；用摄影记录生活；追求高效与简洁的生活方式。</div>
