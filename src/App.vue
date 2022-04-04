@@ -13,12 +13,12 @@ const store = useStore();
 // global color
 const color = computed(() => store.state.settings.color);
 watchEffect(() => {
-	setCSSVariable('--main', color.value);
-	setCSSVariable('--main-light', `${color.value}C0`);
-	setCSSVariable('--main-lighter', `${color.value}A0`);
-	setCSSVariable('--main-extra-light', `${color.value}80`);
-	setCSSVariable('--select', `${color.value}60`);
-	setCSSVariable('--hover', `${color.value}20`);
+  setCSSVariable('--main', color.value);
+  setCSSVariable('--main-light', `${color.value}C0`);
+  setCSSVariable('--main-lighter', `${color.value}A0`);
+  setCSSVariable('--main-extra-light', `${color.value}80`);
+  setCSSVariable('--select', `${color.value}60`);
+  setCSSVariable('--hover', `${color.value}20`);
 });
 
 // global theme
@@ -27,37 +27,37 @@ const theme = computed(() => store.state.settings.theme);
 const mediaQueryListDark = window.matchMedia('(prefers-color-scheme: dark)');
 // system theme change handler
 const handleColorSchemeChange = evt => {
-	if (evt.matches) {
-		changeTheme('dark');
-	} else {
-		changeTheme('light');
-	}
+  if (evt.matches) {
+    changeTheme('dark');
+  } else {
+    changeTheme('light');
+  }
 };
 watchEffect(() => {
-	if (theme.value === 'Follow System') {
-		handleColorSchemeChange(mediaQueryListDark);
-		mediaQueryListDark.addEventListener('change', handleColorSchemeChange);
-	} else if (theme.value) {
-		changeTheme(theme.value.toLowerCase());
-		mediaQueryListDark.removeEventListener('change', handleColorSchemeChange);
-	}
+  if (theme.value === 'Follow System') {
+    handleColorSchemeChange(mediaQueryListDark);
+    mediaQueryListDark.addEventListener('change', handleColorSchemeChange);
+  } else if (theme.value) {
+    changeTheme(theme.value.toLowerCase());
+    mediaQueryListDark.removeEventListener('change', handleColorSchemeChange);
+  }
 });
 
 // media query device width
 const mediaQueryListPhone = window.matchMedia('(max-width: 768px)');
 const handleScreenWidthChange = evt => {
-	store.commit('application/setIsPhone', !!evt.matches);
+  store.commit('application/setIsPhone', !!evt.matches);
 };
 handleScreenWidthChange(mediaQueryListPhone);
 mediaQueryListPhone.addEventListener('change', handleScreenWidthChange);
 
 // save settings, user preference
 watchEffect(() => {
-	const settings = {
-		color: color.value,
-		theme: theme.value,
-	};
-	localStorage.setItem(userPreferenceKey, JSON.stringify(settings));
+  const settings = {
+    color: color.value,
+    theme: theme.value,
+  };
+  localStorage.setItem(userPreferenceKey, JSON.stringify(settings));
 });
 
 </script>
