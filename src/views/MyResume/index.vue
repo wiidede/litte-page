@@ -19,10 +19,16 @@ const nextColor = () => store.commit('settings/nextColor');
 
 
 // content
+const skillTitle = [
+  {key: 'proficient', label: '精通'},
+  {key: 'familiar', label: '熟悉'},
+  {key: 'know', label: '了解'},
+];
+
 const skills = {
   proficient: ['Vue 2.0'],
-  familiar: ['Vue 3.0', 'JS', 'CSS', 'Html', 'Element UI', 'React', 'Redux', 'TypeScript'],
-  know: ['Webpack', 'Vite', 'Linux', 'Python', 'Tensor Flow', 'C ++', 'ROS'],
+  familiar: ['Vue 3.0', 'JS', 'CSS', 'Html', 'ElementUI', 'TypeScript'],
+  know: ['React', 'Redux', 'AntD', 'Webpack', 'Vite', 'Linux', 'Python', 'TensorFlow', 'C++', 'ROS'],
 };
 
 const awards = [
@@ -72,7 +78,7 @@ const awards = [
           </div>
         </div>
         <h2 class="title">
-          教育工作经历
+          教育/工作经历
         </h2>
         <div>2017年09月 - 2021年06月 常熟理工学院 计算机科学与工程学院 物联网工程 本科</div>
         <div>2020年07月 - 2021年06月 苏州科达科技股份有限公司 实习</div>
@@ -113,26 +119,17 @@ const awards = [
         <h2 class="title">
           专业技能
         </h2>
-        <div class="skill-line">
-          精通
-          <pre
-            v-for="(item, index) in skills.proficient"
+        <div
+          v-for="cate in skillTitle"
+          :key="cate.key"
+        >
+          {{ cate.label }}
+          <template
+            v-for="(item, index) in skills[cate.key]"
             :key="`proficient-${index}`"
-          >{{ item }}</pre>
-        </div>
-        <div class="skill-line">
-          熟悉
-          <pre
-            v-for="(item, index) in skills.familiar"
-            :key="`familiar-${index}`"
-          >{{ item }}</pre>
-        </div>
-        <div class="skill-line">
-          了解
-          <pre
-            v-for="(item, index) in skills.know"
-            :key="`know-${index}`"
-          >{{ item }}</pre>
+          >
+            {{ index ? '、' : '' }}<pre>{{ item }}</pre>
+          </template>
         </div>
         <h2 class="title">
           获奖情况
@@ -142,14 +139,15 @@ const awards = [
           :key="`award-${index}`"
           class="award-line"
         >
-          <span class="time">{{ award[0] }}</span>
-          <span class="label">{{ award[1] }}</span>
-          <span class="level">{{ award[2] }}</span>
-          <span class="host">{{ award[3] }}</span>
+          <span
+            v-for="(awardItem, subIndex) in award"
+            :key="`awardItem-${subIndex}`"
+          >{{ awardItem }}</span>
         </div>
         <h2 class="title">
           个人特质
         </h2>
+        <div>重视团队协作。</div>
         <div>对<pre>Vue</pre>源码有一定的理解。</div>
         <div>励志写出逻辑完整、简洁的代码。</div>
         <div>励志写出性能良好、设计优美的前端页面。</div>
@@ -247,27 +245,8 @@ h1, .title {
   font-size: 18px;
 }
 
-.skill-line pre + pre:before {
-  content: '、';
-}
-
 .award-line {
-  display: flex;
-
-  .time {
-    flex: 3;
-  }
-
-  .label {
-    flex: 12;
-  }
-
-  .level {
-    flex: 2;
-  }
-
-  .host {
-    flex: 5;
-  }
+  display: grid;
+  grid-template-columns: 3fr 12fr 2fr 5fr;
 }
 </style>
