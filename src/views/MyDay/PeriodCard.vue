@@ -1,6 +1,6 @@
 <script setup>
-import {Delete, Plus, Edit, Check, Top, Bottom} from '@element-plus/icons';
-import {computed, ref} from 'vue';
+import {Delete, Plus, Edit, Top, Bottom} from '@element-plus/icons';
+import {computed} from 'vue';
 import {formatTimeValue, formatTimeToday} from '/@/utils';
 
 const props = defineProps({
@@ -41,8 +41,6 @@ const props = defineProps({
 
 const emit = defineEmits(['add', 'edit', 'delete', 'start', 'end']);
 
-const isEditAll = ref(false);
-
 const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSleep.startTime));
 </script>
 
@@ -51,22 +49,6 @@ const time = computed(() => formatTimeValue(props.timeSystem - props.wakeAndSlee
     class="my-day-card card-block"
     :class="{'other-day': otherDay, 'card-show': !isEditing}"
   >
-    <!-- top block -->
-    <!--    <template v-if="isPhone">-->
-    <!--      <div-->
-    <!--        class="corner"-->
-    <!--        @click="isEditAll = !isEditAll"-->
-    <!--      />-->
-    <!--      <div-->
-    <!--        class="edit-all"-->
-    <!--        @click="isEditAll = !isEditAll"-->
-    <!--      >-->
-    <!--        <el-icon>-->
-    <!--          <check v-if="isEditAll" />-->
-    <!--          <edit v-else />-->
-    <!--        </el-icon>-->
-    <!--      </div>-->
-    <!--    </template>-->
     <div
       v-if="isEditing"
       class="action-bar"
