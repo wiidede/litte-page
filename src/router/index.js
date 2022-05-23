@@ -13,6 +13,7 @@ const routes = [
   },
   {path: '/my-day', name: 'MyDay', component: () => import('/@/views/MyDay/index.vue')},
   {path: '/my-resume', name: 'MyResume', component: () => import('/@/views/MyResume/index.vue')},
+  {path: '/my-test', name: 'MyTest', component: () => import('/@/views/MyTest/index.vue')},
   {path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('/@/components/NotFound.vue')},
 ];
 
