@@ -26,7 +26,6 @@ const themeActive = computed({
     <span>Theme</span>
     <el-radio-group
       v-model="themeActive"
-      size="mini"
     >
       <el-radio-button
         v-for="theme in themeList"
