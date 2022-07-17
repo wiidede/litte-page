@@ -20,15 +20,15 @@ const nextColor = () => store.commit('settings/nextColor');
 
 // content
 const skillTitle = [
-  {key: 'proficient', label: '精通'},
+  {key: 'proficient', label: '最熟悉'},
   {key: 'familiar', label: '熟悉'},
   {key: 'know', label: '了解'},
 ];
 
 const skills = {
-  proficient: ['Vue 2.0'],
-  familiar: ['Vue 3.0', 'JS', 'CSS', 'Html', 'ElementUI', 'TypeScript'],
-  know: ['React', 'Redux', 'AntD', 'Webpack', 'Vite', 'Linux', 'Python', 'TensorFlow', 'C++', 'ROS'],
+  proficient: ['Vue'],
+  familiar: ['JS', 'CSS', 'Html', 'ElementUI'],
+  know: ['TypeScript', 'React', 'Webpack', 'Vite', 'Linux', 'Python', 'TensorFlow'],
 };
 
 const awards = [
@@ -49,7 +49,7 @@ const awards = [
               王子羽
             </h1>
             <div class="info-line">
-              男 22岁（1999年07月） <br v-if="isPhone">苏州 1.5年
+              男 22岁（1999年07月） <br v-if="isPhone">苏州 工作1年 + 实习1年
             </div>
             <div class="info-line">
               <span style="margin-right: 12px"><i class="iconfont icon-smartphone-line" />17625809601</span>
@@ -82,40 +82,40 @@ const awards = [
         </h2>
         <div>2017年09月 - 2021年06月 常熟理工学院 计算机科学与工程学院 物联网工程 本科</div>
         <div>2020年07月 - 2021年06月 苏州科达科技股份有限公司 实习</div>
-        <div>2021年06月 - 至今 苏州科达科技股份有限公司 Web前端开发工程师</div>
+        <div>2021年06月 - 2022年08月 苏州科达科技股份有限公司 Web前端开发工程师</div>
         <h2 class="title">
           项目经历
         </h2>
-        <strong class="project-title">智能运维项目（苏州科达）</strong>
-        <div>在实习的时候只是参与开发页面的任务。</div>
-        <div>
-          转正之后除了页面开发，开始涉及到框架的修改，比如动态权限变化、三方登录。同时也针对某些页面进行性能优化，UI细节优化，组件代码重构、尽量减少项目中es5的写法、拒绝
-          <pre>Vue</pre>
-          项目中使用
-          <pre>JQuery</pre>
-          。
-        </div>
-        <div>
-          同时也参与到了运维中台项目的开发（使用
-          <pre>React</pre>
-          +
-          <pre>TypeScript</pre>
-          +
-          <pre>antd</pre>
-          +
-          <pre>Redux</pre>
-          ）
-        </div>
+        <strong class="project-title">智能运维项目（苏州科达）（Vue全家桶 + Element UI）</strong>
+        <ol>
+          <li>
+            配合公司前端框架修改项目框架：动态权限变化、三方登录。
+          </li>
+          <li>
+            页面的性能优化、UI细节优化、组件代码重构、尽量减少项目中es5的写法、拒绝<pre>Vue</pre>项目中使用<pre>JQuery</pre>、选用一些依赖更少、性能更高的三方库做替代。
+          </li>
+          <li>
+            独自开发子项目：迷你巡检系统，不走公司统一登录、统一资源流程，合理覆写框架。
+          </li>
+          <li>
+            运维中台项目（<pre>React</pre> + <pre>TypeScript</pre> + <pre>antd</pre> + <pre>Redux</pre>）
+          </li>
+          <li>
+            解析平台、分布式集群管理系统、狮山大屏等项目（<pre>Vue</pre> + <pre>Element UI</pre>）的业务支持。
+          </li>
+        </ol>
         <strong class="project-title">家庭服务机器人、水表识别（大学期间）</strong>
-        <div>
-          使用
-          <pre>ROS</pre>
-          系统操作机器人（
-          <pre>C ++</pre>
-          ），过程中涉及
-          <pre>SLAM</pre>
-          、建图、导航，使用深度学习进行物品识别、从而提供家庭服务，顺带使用深度学习做了水表识别项目。
-        </div>
+        <ol>
+          <li>
+            使用<pre>ROS</pre>系统操作机器人（<pre>C ++</pre>），过程中涉及<pre>SLAM</pre>、建图、导航、路径规划等。
+          </li>
+          <li>
+            使用深度学习进行物品识别、从而提供家庭服务
+          </li>
+          <li>
+            顺带使用深度学习做了水表识别项目。
+          </li>
+        </ol>
         <h2 class="title">
           专业技能
         </h2>
