@@ -20,13 +20,13 @@ const nextColor = () => store.commit('settings/nextColor');
 
 // content
 const skillTitle = [
-  {key: 'proficient', label: '最熟悉'},
+  // {key: 'proficient', label: '精通'},
   {key: 'familiar', label: '熟悉'},
   {key: 'know', label: '了解'},
 ];
 
 const skills = {
-  proficient: ['Vue'],
+  proficient: [],
   familiar: ['JS', 'CSS', 'Html', 'ElementUI'],
   know: ['TypeScript', 'React', 'Webpack', 'Vite', 'Linux', 'Python', 'TensorFlow'],
 };
@@ -89,19 +89,19 @@ const awards = [
         <strong class="project-title">智能运维项目（苏州科达）（Vue全家桶 + Element UI）</strong>
         <ol>
           <li>
-            配合公司前端框架修改项目框架：动态权限变化、三方登录。
+            配合公司前端框架修改项目框架：动态权限变化、三方登录、baseUrl支持相对路径。
           </li>
           <li>
-            页面的性能优化、UI细节优化、组件代码重构、尽量减少项目中es5的写法、拒绝<pre>Vue</pre>项目中使用<pre>JQuery</pre>、选用一些依赖更少、性能更高的三方库做替代。
+            ukey登录、前端导出excel、自定义可视化（组件动态展示）、页面的性能优化、UI细节优化、组件代码重构、减少es5、去掉<pre>JQuery</pre>、使用更好的三方库。
           </li>
           <li>
             独自开发子项目：迷你巡检系统，不走公司统一登录、统一资源流程，合理覆写框架。
           </li>
           <li>
-            运维中台项目（<pre>React</pre> + <pre>TypeScript</pre> + <pre>antd</pre> + <pre>Redux</pre>）
+            运维中台项目（<pre>React</pre> + <pre>TypeScript</pre> + <pre>antd</pre> + <pre>Redux</pre>）修改100+缺陷。
           </li>
           <li>
-            解析平台、分布式集群管理系统、狮山大屏等项目（<pre>Vue</pre> + <pre>Element UI</pre>）的业务支持。
+            支持云平台运维、解析平台、分布式存储系统、狮山大屏等项目（<pre>Vue</pre> + <pre>Element UI</pre>）。
           </li>
         </ol>
         <strong class="project-title">家庭服务机器人、水表识别（大学期间）</strong>
@@ -243,6 +243,10 @@ h1, .title {
 
 .project-title {
   font-size: 18px;
+}
+
+ol {
+  margin: 4px 0;
 }
 
 .award-line {
