@@ -86,22 +86,22 @@ const awards = [
         <h2 class="title">
           项目经历
         </h2>
-        <strong class="project-title">智能运维项目（苏州科达）（Vue全家桶 + Element UI）</strong>
+        <strong class="project-title">智能运维项目（苏州科达 现场摄像头管理）（Vue全家桶 + Element UI）</strong>
         <ol>
           <li>
             配合公司前端框架修改项目框架：动态权限变化、三方登录、baseUrl支持相对路径。
           </li>
           <li>
-            ukey登录、前端导出excel、自定义可视化（组件动态展示）、页面的性能优化、UI细节优化、组件代码重构、减少es5、去掉<pre>JQuery</pre>、使用更好的三方库。
+            ukey登录、前端导出excel、自定义可视化（组件动态展示）、页面的性能优化、UI细节优化、组件代码重构、减少<pre>es5</pre>、去掉<pre>JQuery</pre>、使用更好的三方库。
           </li>
           <li>
-            独自开发子项目：迷你巡检系统，不走公司统一登录、统一资源流程，合理覆写框架。
+            独立开发子项目：迷你巡检系统，不走公司统一登录、统一资源流程，合理覆写框架。
           </li>
           <li>
             运维中台项目（<pre>React</pre> + <pre>TypeScript</pre> + <pre>antd</pre> + <pre>Redux</pre>）修改100+缺陷。
           </li>
           <li>
-            支持云平台运维、解析平台、分布式存储系统、狮山大屏等项目（<pre>Vue</pre> + <pre>Element UI</pre>）。
+            参与云平台运维、解析平台、分布式存储管理系统、狮山大屏等项目（<pre>Vue</pre> + <pre>Element UI</pre>）的业务支持。
           </li>
         </ol>
         <strong class="project-title">家庭服务机器人、水表识别（大学期间）</strong>
