@@ -23,7 +23,8 @@ const simpleMode = ref(true);
 const sn = (name) => simpleMode.value ? 'X'.repeat(name.length) : name;
 
 const keydownCallback = (event) => {
-  if (['M', 'm'].includes(event.key) && event.altKey && event.shiftKey) {
+  console.log(event.key, event.altKey, event.ctrlKey, event.shiftKey);
+  if (event.code === 'KeyM' && event.altKey && event.shiftKey) {
     simpleMode.value = !simpleMode.value;
   }
 };
