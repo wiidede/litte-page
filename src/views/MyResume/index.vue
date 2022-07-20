@@ -127,7 +127,7 @@ const awards = [
         <strong class="project-title">运维中台项目（React + TypeScript + antd + Redux）</strong>
         <ol>
           <li>
-            基于现成的低代码平台开发，修改100+缺陷。
+            基于现成的低代码平台改造开发，修改100+缺陷。
           </li>
         </ol>
         <strong class="project-title">云平台运维、解析平台、分布式存储系统、狮山大屏等项目（Vue + Element UI）</strong>
