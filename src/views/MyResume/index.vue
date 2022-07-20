@@ -6,7 +6,7 @@ export default {
 
 <script setup>
 import {useStore} from 'vuex';
-import {computed} from 'vue';
+import {computed, onBeforeUnmount, ref} from 'vue';
 
 const store = useStore();
 
@@ -17,6 +17,22 @@ const isPhone = computed(() => store.state.application.isPhone);
 store.commit('settings/setColor', '#056676');
 const nextColor = () => store.commit('settings/nextColor');
 
+// simple mode
+const simpleMode = ref(true);
+
+const sn = (name) => simpleMode.value ? 'X'.repeat(name.length) : name;
+
+const keydownCallback = (event) => {
+  if (['M', 'm'].includes(event.key) && event.altKey && event.shiftKey) {
+    simpleMode.value = !simpleMode.value;
+  }
+};
+
+document.addEventListener('keydown', keydownCallback, false);
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', keydownCallback);
+});
 
 // content
 const skillTitle = [
@@ -46,13 +62,13 @@ const awards = [
         <div class="info">
           <div class="base-info">
             <h1 class="name">
-              王子羽
+              王{{ sn('子羽') }}
             </h1>
             <div class="info-line">
               男 22岁（1999年07月） <br v-if="isPhone">苏州 工作1年 + 实习1年
             </div>
             <div class="info-line">
-              <span style="margin-right: 12px"><i class="iconfont icon-smartphone-line" />17625809601</span>
+              <span style="margin-right: 12px"><i class="iconfont icon-smartphone-line" />176{{ sn('2580') }}9601</span>
               <a href="mailto:wiixdede@gmail.com"><i class="iconfont icon-mail-line" />wiixdede@gmail.com</a>
             </div>
             <div class="info-line">
@@ -72,6 +88,7 @@ const awards = [
             @click="nextColor"
           >
             <img
+              v-show="!simpleMode"
               src="../../assets/my-portrait.png"
               alt="portrait"
             >
@@ -80,34 +97,49 @@ const awards = [
         <h2 class="title">
           教育/工作经历
         </h2>
-        <div>2017年09月 - 2021年06月 常熟理工学院 计算机科学与工程学院 物联网工程 本科</div>
-        <div>2020年07月 - 2021年06月 苏州科达科技股份有限公司 实习</div>
-        <div>2021年06月 - 2022年08月 苏州科达科技股份有限公司 Web前端开发工程师</div>
+        <div>2017年09月 - 2021年06月 {{ sn('常熟') }}理工学院 计算机科学与工程学院 物联网工程 本科</div>
+        <div>2020年07月 - 2021年06月 苏州{{ sn('科达') }}科技股份有限公司 实习</div>
+        <div>2021年06月 - 2022年08月 苏州{{ sn('科达') }}科技股份有限公司 Web前端开发工程师</div>
         <h2 class="title">
           项目经历
         </h2>
-        <strong class="project-title">智能运维项目（苏州科达 现场摄像头管理）（Vue全家桶 + Element UI）</strong>
+        <strong class="project-title">智能运维项目（苏州{{ sn('科达') }}）（Vue全家桶 + Element UI）</strong>
+        <div class="project-describe">
+          苏州{{ sn('科达') }}是一家摄像头制造企业，所以项目的主要业务都是摄像头的维护和为客户提供一套城市管理之类的解决方案。智能运维项目就是一套设备、用户的管理及展示系统。
+        </div>
         <ol>
           <li>
-            配合公司前端框架修改项目框架：动态权限变化、三方登录、baseUrl支持相对路径。
+            配合公司前端框架修改项目框架：动态权限变化、三方登录、baseUrl支持相对路径
           </li>
           <li>
-            ukey登录、前端导出excel、自定义可视化（组件动态展示）、页面的性能优化、UI细节优化、组件代码重构、减少<pre>es5</pre>、去掉<pre>JQuery</pre>、使用更好的三方库。
+            响应式echarts、el-tooltip封装溢出判断、前端导出excel、uKey登录
           </li>
           <li>
-            独立开发子项目：迷你巡检系统，不走公司统一登录、统一资源流程，合理覆写框架。
+            页面性能优化、UI细节优化、组件代码重构、减少es5、去除JQuery、更换三方库
           </li>
           <li>
-            运维中台项目（<pre>React</pre> + <pre>TypeScript</pre> + <pre>antd</pre> + <pre>Redux</pre>）修改100+缺陷。
+            独自开发子项目迷你巡检系统：不走公司统一登录、统一资源流程，合理覆写框架
           </li>
           <li>
-            参与云平台运维、解析平台、分布式存储管理系统、狮山大屏等项目（<pre>Vue</pre> + <pre>Element UI</pre>）的业务支持。
+            开发子项目：工单管理（动态表格、动态表单）；自定义可视化（组件动态展示）；数据治理平台（数据展示、权限控制）等
+          </li>
+        </ol>
+        <strong class="project-title">运维中台项目（React + TypeScript + antd + Redux）</strong>
+        <ol>
+          <li>
+            基于现成的低代码平台开发，修改100+缺陷。
+          </li>
+        </ol>
+        <strong class="project-title">云平台运维、解析平台、分布式存储系统、狮山大屏等项目（Vue + Element UI）</strong>
+        <ol>
+          <li>
+            项目支持、业务开发。
           </li>
         </ol>
         <strong class="project-title">家庭服务机器人、水表识别（大学期间）</strong>
         <ol>
           <li>
-            使用<pre>ROS</pre>系统操作机器人（<pre>C ++</pre>），过程中涉及<pre>SLAM</pre>、建图、导航、路径规划等。
+            使用ROS系统操作机器人（C++），过程中涉及SLAM、建图、导航、路径规划等。
           </li>
           <li>
             使用深度学习进行物品识别、从而提供家庭服务
@@ -204,6 +236,7 @@ pre {
 .portrait {
   background: var(--main);
   width: 96px;
+  min-height: 128px;
   line-height: 0;
 
   img {
@@ -243,6 +276,11 @@ h1, .title {
 
 .project-title {
   font-size: 18px;
+}
+
+.project-describe {
+  font-size: .9em;
+  color: var(--font-color-light);
 }
 
 ol {
