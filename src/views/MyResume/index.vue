@@ -39,12 +39,12 @@ onBeforeUnmount(() => {
 const skillTitle = [
   {key: 'proficient', label: '熟悉'},
   {key: 'familiar', label: '熟练使用'},
-  {key: 'know', label: '了解'},
+  {key: 'know', label: '比较熟悉'},
 ];
 
 const skills = {
   proficient: ['JS', 'CSS', 'Html','Vue', 'Vuex', 'Vue-router'],
-  familiar: ['ElementUI', 'Echarts'],
+  familiar: ['ElementUI', 'Echarts', 'Git'],
   know: ['TypeScript', 'React', 'Webpack', 'Vite', 'Linux', 'Python', 'TensorFlow'],
 };
 
@@ -121,7 +121,7 @@ const awards = [
         </h2>
         <strong class="project-title">智能运维项目（苏州{{ sn('科达') }}）（Vue全家桶 + Element UI）</strong>
         <div class="project-describe">
-          苏州{{ sn('科达') }}是一家摄像头制造企业，所以项目的主要业务都是摄像头的维护和为客户提供一套城市管理之类的解决方案。智能运维项目就是一套设备、用户的管理及展示系统。
+          苏州{{ sn('科达') }}是一家摄像头制造企业，所以项目的主要业务都是摄像头的维护和为客户提供一套城市管理之类的解决方案。智能运维项目就是一套设备、用户、配置的管理及数据、图表动态展示的系统。
         </div>
         <ol>
           <li>
