@@ -37,14 +37,14 @@ onBeforeUnmount(() => {
 
 // content
 const skillTitle = [
-  // {key: 'proficient', label: '精通'},
-  {key: 'familiar', label: '熟悉'},
+  {key: 'proficient', label: '熟悉'},
+  {key: 'familiar', label: '熟练使用'},
   {key: 'know', label: '了解'},
 ];
 
 const skills = {
-  proficient: [],
-  familiar: ['JS', 'CSS', 'Html', 'ElementUI'],
+  proficient: ['JS', 'CSS', 'Html','Vue', 'Vuex', 'Vue-router'],
+  familiar: ['ElementUI', 'Echarts'],
   know: ['TypeScript', 'React', 'Webpack', 'Vite', 'Linux', 'Python', 'TensorFlow'],
 };
 
@@ -96,6 +96,21 @@ const awards = [
           </div>
         </div>
         <h2 class="title">
+          专业技能
+        </h2>
+        <div
+          v-for="cate in skillTitle"
+          :key="cate.key"
+        >
+          {{ cate.label }}
+          <template
+            v-for="(item, index) in skills[cate.key]"
+            :key="`proficient-${index}`"
+          >
+            {{ index ? '、' : '' }}<pre>{{ item }}</pre>
+          </template>
+        </div>
+        <h2 class="title">
           教育/工作经历
         </h2>
         <div>2017年09月 - 2021年06月 {{ sn('常熟') }}理工学院 计算机科学与工程学院 物联网工程 本科</div>
@@ -143,27 +158,9 @@ const awards = [
             使用ROS系统操作机器人（C++），过程中涉及SLAM、建图、导航、路径规划等。
           </li>
           <li>
-            使用深度学习进行物品识别、从而提供家庭服务
-          </li>
-          <li>
-            顺带使用深度学习做了水表识别项目。
+            使用深度学习进行物品识别、从而提供家庭服务。顺带做了水表识别的项目。
           </li>
         </ol>
-        <h2 class="title">
-          专业技能
-        </h2>
-        <div
-          v-for="cate in skillTitle"
-          :key="cate.key"
-        >
-          {{ cate.label }}
-          <template
-            v-for="(item, index) in skills[cate.key]"
-            :key="`proficient-${index}`"
-          >
-            {{ index ? '、' : '' }}<pre>{{ item }}</pre>
-          </template>
-        </div>
         <h2 class="title">
           获奖情况
         </h2>
@@ -182,9 +179,8 @@ const awards = [
         </h2>
         <div>重视团队协作。</div>
         <div>对<pre>Vue</pre>源码有一定的理解。</div>
-        <div>励志写出逻辑完整、简洁的代码。</div>
-        <div>励志写出性能良好、设计优美的前端页面。</div>
-        <div>独立审美；热爱科技；用摄影记录生活；追求高效与简洁的生活方式。</div>
+        <div>励志写出逻辑完整、简洁的代码；写出性能良好、设计优美的前端页面。</div>
+        <div>背单词；跑步；独立审美；热爱科技；摄影；追求高效与简洁的生活方式。</div>
         <a
           class="online-site"
           href="https://wiidede.github.io/little-page/#/my-resume"
